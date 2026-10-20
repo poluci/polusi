@@ -5,55 +5,67 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Редактирование — Позови</title>
 
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Lora:ital,wght@0,400;0,600;1,400&family=Playfair+Display:wght@400;600&family=Golos+Text:wght@400;500;600&family=Forum&family=Yeseva+One&family=Unbounded:wght@800&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@1,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/polusi/static/app.css">
 </head>
-<body class="">
+<body class="app">
 
-<header class="top"><a class="logo" href="/polusi/">Позови</a><nav><a href="/polusi/#examples">Примеры</a><a href="/polusi/#prices">Цены</a><a class="btn btn-sm" href="/polusi/new">Создать</a></nav></header>
-<main class="narrow">
-  <h1>Редактировать приглашение</h1>
+<header class="nav"><a class="logo" href="/polusi/"><span class="logo-mark"></span>Позови</a><nav><a href="/polusi/#how">Как работает</a><a href="/polusi/#features">Возможности</a><a href="/polusi/#prices">Цены</a></nav><a class="btn btn-dark btn-sm" href="/polusi/new">Создать</a></header>
+<main class="builder">
+  <div class="builder-intro">
+    <p class="eyebrow">Редактирование</p>
+    <h1>Поправим <i>детали</i></h1>
+    <p class="sub">Гости увидят изменения сразу, ссылка останется прежней.</p>
+  </div>
   <p class="note">Это демо-приглашение, изменения в нём не сохраняются.</p>
   
-  <form method="post" action="/polusi/c/demo-kabinet/edit" class="form" enctype="multipart/form-data">
-    <fieldset>
-      <legend>Событие</legend>
-      <label>Тип события<select name="kind"><option value="wedding" selected>Свадьба</option><option value="birthday">День рождения</option><option value="other">Другой праздник</option></select></label>
-      <label>Имена или название<input name="names" value="Анна и Михаил" placeholder="Анна и Михаил" required maxlength="80"></label>
-      <div class="row">
-        <label>Дата<input type="date" name="date" value="2027-06-19" required></label>
-        <label>Время<input type="time" name="time" value="15:00"></label>
-      </div>
-    </fieldset>
-    <fieldset>
-      <legend>Фото</legend>
-      
-      <label>Фото для обложки <small>JPG, PNG или WebP до 8 МБ. Лучше вертикальное</small><input type="file" name="photo" accept="image/jpeg,image/png,image/webp"></label>
-    </fieldset>
-    <fieldset>
-      <legend>Место</legend>
-      <label>Название места<input name="venue" value="Усадьба «Архангельское»" placeholder="Ресторан «Сад»"></label>
-      <label>Адрес<input name="address" value="Московская обл., Красногорск, пос. Архангельское" placeholder="Москва, ул. Садовая, 1"></label>
-    </fieldset>
-    <fieldset>
-      <legend>Текст</legend>
-      <label>Обращение к гостям<textarea name="message" rows="4" placeholder="Дорогие друзья! Мы будем счастливы...">Дорогие друзья! Мы будем счастливы разделить с вами этот день. Приходите, будет красиво, вкусно и очень душевно.</textarea></label>
-      <label>Программа дня <small>каждый пункт с новой строки, время в начале</small><textarea name="program" rows="4" placeholder="15:00 Сбор гостей&#10;16:00 Церемония">15:00 Сбор гостей и фуршет
+  <div class="builder-grid">
+    <form method="post" action="/polusi/c/demo-kabinet/edit" class="form" enctype="multipart/form-data" id="builder">
+      <section class="card"><div class="card-head"><span class="num">01</span><div><h2>Событие</h2><p>Что празднуем и когда</p></div></div>
+        <div class="segs"><label class="seg"><input type="radio" name="kind" value="wedding" checked><span>Свадьба</span></label><label class="seg"><input type="radio" name="kind" value="birthday"><span>День рождения</span></label><label class="seg"><input type="radio" name="kind" value="other"><span>Другой праздник</span></label></div>
+        <label class="field"><span>Имена или название</span><input name="names" value="Анна и Михаил" placeholder="Анна и Михаил" required maxlength="80" data-live="names"></label>
+        <div class="row">
+          <label class="field"><span>Дата</span><input type="date" name="date" value="2027-06-19" required data-live="date"></label>
+          <label class="field"><span>Время</span><input type="time" name="time" value="15:00" data-live="date"></label>
+        </div></section>
+      <section class="card"><div class="card-head"><span class="num">02</span><div><h2>Обложка</h2><p>Вертикальное фото смотрится лучше всего</p></div></div>
+        <label class="drop">
+          <input type="file" name="photo" accept="image/jpeg,image/png,image/webp" data-live="photo">
+          <img class="drop-img" hidden alt="">
+          <span class="drop-text"><b>Выберите фото</b><small>JPG, PNG или WebP до 8 МБ</small></span>
+        </label>
+        </section>
+      <section class="card"><div class="card-head"><span class="num">03</span><div><h2>Место</h2><p>Под адресом появится кнопка Яндекс Карт</p></div></div>
+        <label class="field"><span>Название места</span><input name="venue" value="Усадьба «Архангельское»" placeholder="Ресторан «Сад»" data-live="venue"></label>
+        <label class="field"><span>Адрес</span><input name="address" value="Московская обл., Красногорск, пос. Архангельское" placeholder="Москва, ул. Садовая, 1" data-live="address"></label></section>
+      <section class="card"><div class="card-head"><span class="num">04</span><div><h2>Для гостей</h2><p>Всё необязательно, пустые блоки на сайте не покажутся</p></div></div>
+        <label class="field"><span>Обращение</span><textarea name="message" rows="4" placeholder="Дорогие друзья! Мы будем счастливы разделить с вами этот день." data-live="message">Дорогие друзья! Мы будем счастливы разделить с вами этот день. Приходите, будет красиво, вкусно и очень душевно.</textarea></label>
+        <label class="field"><span>Программа дня <small>каждый пункт с новой строки</small></span><textarea name="program" rows="4" placeholder="15:00 Сбор гостей&#10;16:00 Церемония&#10;17:30 Банкет">15:00 Сбор гостей и фуршет
 16:00 Церемония
 17:30 Банкет
 23:00 Торт и финал вечера</textarea></label>
-      <label>Дресс-код<textarea name="dresscode" rows="2">Будем рады, если вы поддержите палитру праздника. Просим не выбирать белый цвет.</textarea></label>
-      <label>Цвета праздника <small>через запятую, например #f3ece1, #c9a96e</small><input name="colors" value="#f3ece1, #c9a96e, #8a8f7a"></label>
-      <label>Контакт для вопросов<input name="contact" value="Организатор Ольга, +7 900 000-00-00" placeholder="Организатор Ольга, +7 900 000-00-00"></label>
-      <label>Ответить до<input type="date" name="deadline" value=""></label>
-    </fieldset>
-    <fieldset>
-      <legend>Стиль</legend>
-      <div class="themes"><label class="theme-pick theme-pick-klassika"><input type="radio" name="theme" value="klassika" checked><span>Усадьба</span></label><label class="theme-pick theme-pick-sad"><input type="radio" name="theme" value="sad"><span>Белые ночи</span></label><label class="theme-pick theme-pick-noch"><input type="radio" name="theme" value="noch"><span>Афиша</span></label></div>
-    </fieldset>
-    <button class="btn" type="submit" disabled>Сохранить</button>
-  </form>
+        <label class="field"><span>Дресс-код</span><textarea name="dresscode" rows="2" placeholder="Просим не выбирать белый цвет">Будем рады, если вы поддержите палитру праздника. Просим не выбирать белый цвет.</textarea></label>
+        <label class="field"><span>Цвета праздника <small>через запятую</small></span><input name="colors" value="#f3ece1, #c9a96e, #8a8f7a" placeholder="#f3ece1, #c9a96e, #8a8f7a"></label>
+        <div class="row">
+          <label class="field"><span>Контакт для вопросов</span><input name="contact" value="Организатор Ольга, +7 900 000-00-00" placeholder="Ольга, +7 900 000-00-00"></label>
+          <label class="field"><span>Ответить до</span><input type="date" name="deadline" value=""></label>
+        </div></section>
+      <section class="card"><div class="card-head"><span class="num">05</span><div><h2>Стиль</h2><p>Шрифты, цвета и анимация уже подобраны</p></div></div><div class="themes"><label class="theme-card"><input type="radio" name="theme" value="klassika" checked>
+      <span class="theme-img"><img src="/polusi/static/photos/usadba-cover.jpg" alt="" loading="lazy"></span><b>Усадьба</b><small>Усадьба, золото, классика</small></label><label class="theme-card"><input type="radio" name="theme" value="sad">
+      <span class="theme-img"><img src="/polusi/static/photos/sosny-cover.jpg" alt="" loading="lazy"></span><b>Белые ночи</b><small>Лес, воздух, северное лето</small></label><label class="theme-card"><input type="radio" name="theme" value="noch">
+      <span class="theme-img"><img src="/polusi/static/photos/afisha-cover.jpg" alt="" loading="lazy"></span><b>Афиша</b><small>Ярко, громко, вечеринка</small></label></div></section>
+      <div class="submit-bar">
+        <button class="btn btn-dark" type="submit" disabled>Сохранить изменения</button>
+        <span>Ссылка для гостей не изменится</span>
+      </div>
+    </form>
+    <aside class="preview" aria-label="Предпросмотр">
+      <div class="device"><span class="screen"><iframe src="/polusi/i/demo-klassika" title="Предпросмотр приглашения" tabindex="-1"></iframe></span></div>
+      <p class="preview-note">Живой предпросмотр</p>
+    </aside>
+  </div>
 </main>
 <footer class="foot"><span>© 2026 Позови</span><a href="/polusi/privacy">Политика конфиденциальности</a></footer>
+<script src="/polusi/static/builder.js" defer></script>
 <script>document.addEventListener('submit',function(e){e.preventDefault();alert('Это витрина сайта. Создание приглашений и ответы гостей заработают на полной версии с сервером.');});</script></body>
 </html>
