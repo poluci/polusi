@@ -23,10 +23,6 @@ const plural = (n, one, few, many) => {
   return many;
 };
 
-const FONTS =
-  '<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>' +
-  '<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Lora:ital,wght@0,400;0,600;1,400&family=Playfair+Display:wght@400;600&family=Golos+Text:wght@400;500;600&family=Forum&family=Yeseva+One&family=Unbounded:wght@800&display=swap" rel="stylesheet">';
-
 function page({ title, body, css = 'app.css', head = '', bodyClass = '', fonts = null }) {
   return `<!doctype html>
 <html lang="ru">
@@ -35,7 +31,7 @@ function page({ title, body, css = 'app.css', head = '', bodyClass = '', fonts =
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>${esc(title)}</title>
 ${head}
-${fonts ? `<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?${fonts}&display=swap" rel="stylesheet">` : FONTS}
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?${fonts || LANDING_FONTS}&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/static/${css}">
 </head>
 <body class="${bodyClass}">
@@ -44,7 +40,7 @@ ${body}
 </html>`;
 }
 
-const header = () => `<header class="top"><a class="logo" href="/">${BRAND}</a><nav><a href="/#examples">Примеры</a><a href="/#prices">Цены</a><a class="btn btn-sm" href="/new">Создать</a></nav></header>`;
+const header = () => `<header class="nav"><a class="logo" href="/"><span class="logo-mark"></span>${BRAND}</a><nav><a href="/#how">Как работает</a><a href="/#features">Возможности</a><a href="/#prices">Цены</a></nav><a class="btn btn-dark btn-sm" href="/new">Создать</a></header>`;
 const footer = () => `<footer class="foot"><span>© ${new Date().getFullYear()} ${BRAND}</span><a href="/privacy">Политика конфиденциальности</a></footer>`;
 
 // ---------- лендинг ----------
@@ -175,57 +171,78 @@ function landing() {
 
 // ---------- конструктор ----------
 
+const THEME_INFO = {
+  klassika: { photo: '/static/photos/usadba-cover.jpg', note: 'Усадьба, золото, классика' },
+  sad: { photo: '/static/photos/sosny-cover.jpg', note: 'Лес, воздух, северное лето' },
+  noch: { photo: '/static/photos/afisha-cover.jpg', note: 'Ярко, громко, вечеринка' },
+};
+
 function builder({ event = {}, errors = [], editKey = null }) {
   const v = (k) => esc(event[k] || '');
-  const opt = (map, cur) => Object.entries(map).map(([k, label]) => `<option value="${k}"${k === cur ? ' selected' : ''}>${label}</option>`).join('');
+  const theme = THEMES[event.theme] ? event.theme : 'klassika';
+  const kind = KINDS[event.kind] ? event.kind : 'wedding';
+  const kindPick = Object.entries(KINDS)
+    .map(([k, label]) => `<label class="seg"><input type="radio" name="kind" value="${k}"${k === kind ? ' checked' : ''}><span>${label}</span></label>`)
+    .join('');
   const themePick = Object.entries(THEMES)
-    .map(([k, label]) => `<label class="theme-pick theme-pick-${k}"><input type="radio" name="theme" value="${k}"${(event.theme || 'klassika') === k ? ' checked' : ''}><span>${label}</span></label>`)
+    .map(([k, label]) => `<label class="theme-card"><input type="radio" name="theme" value="${k}"${theme === k ? ' checked' : ''}>
+      <span class="theme-img"><img src="${THEME_INFO[k].photo}" alt="" loading="lazy"></span><b>${label}</b><small>${THEME_INFO[k].note}</small></label>`)
     .join('');
   const action = editKey ? `/c/${editKey}/edit` : '/new';
+  const card = (n, title, hint, inner) => `<section class="card"><div class="card-head"><span class="num">${n}</span><div><h2>${title}</h2>${hint ? `<p>${hint}</p>` : ''}</div></div>${inner}</section>`;
   const body = `
 ${header()}
-<main class="narrow">
-  <h1>${editKey ? 'Редактировать приглашение' : 'Новое приглашение'}</h1>
+<main class="builder">
+  <div class="builder-intro">
+    <p class="eyebrow">${editKey ? 'Редактирование' : 'Конструктор'}</p>
+    <h1>${editKey ? 'Поправим <i>детали</i>' : 'Соберём ваше <i>приглашение</i>'}</h1>
+    <p class="sub">${editKey ? 'Гости увидят изменения сразу, ссылка останется прежней.' : 'Пять коротких шагов. Справа сразу видно, как сайт увидят гости.'}</p>
+  </div>
   ${event.demo ? '<p class="note">Это демо-приглашение, изменения в нём не сохраняются.</p>' : ''}
-  ${errors.length ? `<div class="errors">${errors.map((e) => `<p>${esc(e)}</p>`).join('')}</div>` : ''}
-  <form method="post" action="${action}" class="form" enctype="multipart/form-data">
-    <fieldset>
-      <legend>Событие</legend>
-      <label>Тип события<select name="kind">${opt(KINDS, event.kind)}</select></label>
-      <label>Имена или название<input name="names" value="${v('names')}" placeholder="Анна и Михаил" required maxlength="80"></label>
-      <div class="row">
-        <label>Дата<input type="date" name="date" value="${v('date')}" required></label>
-        <label>Время<input type="time" name="time" value="${v('time')}"></label>
+  ${errors.length ? `<div class="errors" role="alert">${errors.map((e) => `<p>${esc(e)}</p>`).join('')}</div>` : ''}
+  <div class="builder-grid">
+    <form method="post" action="${action}" class="form" enctype="multipart/form-data" id="builder">
+      ${card('01', 'Событие', 'Что празднуем и когда', `
+        <div class="segs">${kindPick}</div>
+        <label class="field"><span>Имена или название</span><input name="names" value="${v('names')}" placeholder="Анна и Михаил" required maxlength="80" data-live="names"></label>
+        <div class="row">
+          <label class="field"><span>Дата</span><input type="date" name="date" value="${v('date')}" required data-live="date"></label>
+          <label class="field"><span>Время</span><input type="time" name="time" value="${v('time')}" data-live="date"></label>
+        </div>`)}
+      ${card('02', 'Обложка', 'Вертикальное фото смотрится лучше всего', `
+        <label class="drop${event.photo ? ' has' : ''}">
+          <input type="file" name="photo" accept="image/jpeg,image/png,image/webp" data-live="photo">
+          <img class="drop-img" ${event.photo ? `src="/u/${esc(event.photo)}"` : 'hidden'} alt="">
+          <span class="drop-text"><b>${event.photo ? 'Заменить фото' : 'Выберите фото'}</b><small>JPG, PNG или WebP до 8 МБ</small></span>
+        </label>
+        ${event.photo ? '<label class="check"><input type="checkbox" name="removePhoto"><span>Убрать фото</span></label>' : ''}`)}
+      ${card('03', 'Место', 'Под адресом появится кнопка Яндекс Карт', `
+        <label class="field"><span>Название места</span><input name="venue" value="${v('venue')}" placeholder="Ресторан «Сад»" data-live="venue"></label>
+        <label class="field"><span>Адрес</span><input name="address" value="${v('address')}" placeholder="Москва, ул. Садовая, 1" data-live="address"></label>`)}
+      ${card('04', 'Для гостей', 'Всё необязательно, пустые блоки на сайте не покажутся', `
+        <label class="field"><span>Обращение</span><textarea name="message" rows="4" placeholder="Дорогие друзья! Мы будем счастливы разделить с вами этот день." data-live="message">${v('message')}</textarea></label>
+        <label class="field"><span>Программа дня <small>каждый пункт с новой строки</small></span><textarea name="program" rows="4" placeholder="15:00 Сбор гостей&#10;16:00 Церемония&#10;17:30 Банкет">${v('program')}</textarea></label>
+        <label class="field"><span>Дресс-код</span><textarea name="dresscode" rows="2" placeholder="Просим не выбирать белый цвет">${v('dresscode')}</textarea></label>
+        <label class="field"><span>Цвета праздника <small>через запятую</small></span><input name="colors" value="${v('colors')}" placeholder="#f3ece1, #c9a96e, #8a8f7a"></label>
+        <div class="row">
+          <label class="field"><span>Контакт для вопросов</span><input name="contact" value="${v('contact')}" placeholder="Ольга, +7 900 000-00-00"></label>
+          <label class="field"><span>Ответить до</span><input type="date" name="deadline" value="${v('deadline')}"></label>
+        </div>`)}
+      ${card('05', 'Стиль', 'Шрифты, цвета и анимация уже подобраны', `<div class="themes">${themePick}</div>`)}
+      <div class="submit-bar">
+        <button class="btn btn-dark" type="submit"${event.demo ? ' disabled' : ''}>${editKey ? 'Сохранить изменения' : 'Создать приглашение'}</button>
+        <span>${editKey ? 'Ссылка для гостей не изменится' : 'Бесплатно, пока сервис в тестовом режиме'}</span>
       </div>
-    </fieldset>
-    <fieldset>
-      <legend>Фото</legend>
-      ${event.photo ? `<img class="photo-now" src="/u/${esc(event.photo)}" alt="Текущее фото"><label class="inline"><input type="checkbox" name="removePhoto"> Убрать фото</label>` : ''}
-      <label>${event.photo ? 'Заменить фото' : 'Фото для обложки'} <small>JPG, PNG или WebP до 8 МБ. Лучше вертикальное</small><input type="file" name="photo" accept="image/jpeg,image/png,image/webp"></label>
-    </fieldset>
-    <fieldset>
-      <legend>Место</legend>
-      <label>Название места<input name="venue" value="${v('venue')}" placeholder="Ресторан «Сад»"></label>
-      <label>Адрес<input name="address" value="${v('address')}" placeholder="Москва, ул. Садовая, 1"></label>
-    </fieldset>
-    <fieldset>
-      <legend>Текст</legend>
-      <label>Обращение к гостям<textarea name="message" rows="4" placeholder="Дорогие друзья! Мы будем счастливы...">${v('message')}</textarea></label>
-      <label>Программа дня <small>каждый пункт с новой строки, время в начале</small><textarea name="program" rows="4" placeholder="15:00 Сбор гостей&#10;16:00 Церемония">${v('program')}</textarea></label>
-      <label>Дресс-код<textarea name="dresscode" rows="2">${v('dresscode')}</textarea></label>
-      <label>Цвета праздника <small>через запятую, например #f3ece1, #c9a96e</small><input name="colors" value="${v('colors')}"></label>
-      <label>Контакт для вопросов<input name="contact" value="${v('contact')}" placeholder="Организатор Ольга, +7 900 000-00-00"></label>
-      <label>Ответить до<input type="date" name="deadline" value="${v('deadline')}"></label>
-    </fieldset>
-    <fieldset>
-      <legend>Стиль</legend>
-      <div class="themes">${themePick}</div>
-    </fieldset>
-    <button class="btn" type="submit"${event.demo ? ' disabled' : ''}>${editKey ? 'Сохранить' : 'Создать приглашение'}</button>
-  </form>
+    </form>
+    <aside class="preview" aria-label="Предпросмотр">
+      <div class="device"><span class="screen"><iframe src="${editKey && event.slug && !event.demo ? `/i/${esc(event.slug)}` : `/i/demo-${theme}`}" title="Предпросмотр приглашения" tabindex="-1"></iframe></span></div>
+      <p class="preview-note">Живой предпросмотр</p>
+    </aside>
+  </div>
 </main>
-${footer()}`;
-  return page({ title: `${editKey ? 'Редактирование' : 'Новое приглашение'} — ${BRAND}`, body });
+${footer()}
+<script src="/static/builder.js" defer></script>`;
+  return page({ title: `${editKey ? 'Редактирование' : 'Новое приглашение'} — ${BRAND}`, body, bodyClass: 'app' });
 }
 
 // ---------- сайт-приглашение ----------
@@ -418,7 +435,7 @@ ${header()}
 
   <div class="share">
     <label>Ссылка для гостей<input id="share-link" readonly value="${esc(link)}"></label>
-    <button class="btn" type="button" data-copy="#share-link">Скопировать</button>
+    <button class="btn btn-dark" type="button" data-copy="#share-link">Скопировать</button>
   </div>
 
   <div class="stats">
