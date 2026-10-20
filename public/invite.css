@@ -1,0 +1,171 @@
+/* Сайт-приглашение. Три мира на общей разметке:
+   Усадьба (klassika) — жёлтый фасад и белые колонны подмосковной усадьбы, гравюрная линия;
+   Белые ночи (sad) — северное небо над кромкой соснового леса, ночь внутри;
+   Афиша (noch) — бархат театрального занавеса с Большой Дмитровки, шрифт и есть картинка. */
+
+.theme-klassika {
+  --cover: #efe0a8; --ground: #f8f8f4; --ink: #1f3a2e; --soft: #4e5f55; --line: #d9d6c4;
+  --field: #ffffff; --button: #1f3a2e; --button-ink: #f8f8f4; --mark: #efe0a8;
+  --display: 'Forum', 'Times New Roman', serif; --text: 'Alegreya', Georgia, serif; --size: 20px;
+}
+.theme-sad {
+  --cover: #d9e4e8; --ground: #183d33; --ink: #e6eee8; --soft: #b3c7bb; --line: #2f5a4c;
+  --field: #20493d; --button: #c9d9a6; --button-ink: #10291f; --mark: #c9d9a6;
+  --display: 'Yeseva One', Georgia, serif; --text: 'Literata', Georgia, serif; --size: 18px;
+}
+.theme-noch {
+  --cover: #6b0f2a; --ground: #6b0f2a; --ink: #ffd6e0; --soft: #ffd6e0; --line: #8f2e4a;
+  --field: #7d1a37; --button: #ffe15c; --button-ink: #4a0819; --mark: #ffe15c;
+  --display: 'Unbounded', 'Arial Black', sans-serif; --text: 'Manrope', system-ui, sans-serif; --size: 17px;
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--ground); color: var(--ink); font: var(--size)/1.6 var(--text); caret-color: var(--mark); }
+::selection { background: var(--mark); color: var(--button-ink); }
+a { color: inherit; text-decoration-thickness: 1px; text-underline-offset: .2em; }
+:focus-visible { outline: 2px solid var(--mark); outline-offset: 3px; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+h1, h2 { font-family: var(--display); font-weight: 400; margin: 0; text-wrap: balance; }
+p { margin: 0 0 .8em; }
+
+/* ---------- обложка ---------- */
+.cover { position: relative; min-height: 100svh; display: flex; flex-direction: column; justify-content: center; padding: 56px 20px; background: var(--cover); overflow: hidden; }
+.cover-lead { margin: 0 0 18px; }
+.cover-names { line-height: 1; overflow-wrap: anywhere; }
+.cover-date { margin: 22px 0 0; }
+.countdown { display: flex; gap: 22px; margin-top: 14px; font-variant-numeric: tabular-nums; }
+.countdown div { display: flex; align-items: baseline; gap: 6px; }
+
+/* Усадьба: портик над именами, всё по оси, как фасад */
+.theme-klassika .cover { align-items: center; text-align: center; color: var(--ink); }
+.theme-klassika .portico { width: min(300px, 78vw); height: auto; color: var(--ink); margin-bottom: 26px; }
+.theme-klassika .cover-lead { font-style: italic; font-size: 21px; }
+.theme-klassika .cover-names { font-size: clamp(52px, 13vw, 112px); letter-spacing: .01em; }
+.theme-klassika .cover-date { font-size: 21px; }
+.theme-klassika .countdown { font-size: 17px; color: var(--soft); }
+.theme-klassika .countdown b { font: 400 26px var(--display); color: var(--ink); }
+
+/* Белые ночи: светлое небо сверху, лес съедает низ экрана и продолжается страницей */
+.theme-sad .cover { justify-content: flex-start; padding-top: 18vh; color: #183d33; background: linear-gradient(180deg, #f1f5f3 0%, #d9e4e8 55%, #bccfd6 100%); }
+.theme-sad .cover-lead { font-size: 18px; }
+.theme-sad .cover-names { font-size: clamp(50px, 14vw, 120px); max-width: 9.5em; }
+.theme-sad .cover-date { font-size: 19px; }
+.theme-sad .countdown { font-size: 15px; }
+.theme-sad .countdown b { font: 400 24px var(--display); }
+.theme-sad .pines { position: absolute; left: 0; right: 0; bottom: -1px; width: 100%; height: 34vh; fill: var(--ground); }
+
+/* Афиша: имя и возраст набраны во весь экран, остальное мелко */
+.theme-noch .cover { justify-content: flex-end; padding-bottom: 48px; color: var(--ink); }
+.theme-noch .cover-lead { order: -2; position: absolute; top: 24px; left: 20px; right: 20px; font-size: 15px; font-weight: 500; }
+.theme-noch .cover-names { font-weight: 800; font-size: clamp(56px, 17vw, 170px); letter-spacing: -.03em; line-height: .9; display: flex; flex-direction: column; }
+.theme-noch .n-num { font-size: 2.6em; line-height: .78; color: var(--mark); letter-spacing: -.05em; }
+.theme-noch .cover-date { font-size: 18px; font-weight: 700; max-width: 22em; }
+.theme-noch .countdown { font-size: 14px; }
+.theme-noch .countdown b { font: 800 22px var(--display); }
+
+/* Обложка с фото: снимок на весь экран, текст внизу поверх затемнения */
+.cover.has-photo { justify-content: flex-end; padding: 48px 22px 40px; color: #fff; background: #1a1a1a; }
+.cover-photo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; }
+.cover.has-photo::after { content: ''; position: absolute; inset: 0; z-index: 1; background: linear-gradient(180deg, rgba(0,0,0,0) 38%, rgba(0,0,0,.18) 58%, rgba(0,0,0,.66) 100%); }
+.cover.has-photo > :not(.cover-photo) { position: relative; z-index: 2; }
+.cover.has-photo .countdown, .cover.has-photo .countdown b { color: #fff; }
+.theme-klassika .cover.has-photo { align-items: center; }
+.theme-klassika .cover.has-photo .cover-photo { filter: sepia(.12) saturate(.9); }
+.theme-sad .cover.has-photo { padding-top: 48px; color: #fff; background: #183d33; }
+.theme-sad .cover.has-photo::after { background: linear-gradient(180deg, rgba(24,61,51,0) 35%, rgba(24,61,51,.35) 60%, #183d33 100%); }
+.theme-noch .cover.has-photo { background: #6b0f2a; }
+.theme-noch .cover.has-photo .cover-photo { filter: grayscale(1) contrast(1.15); mix-blend-mode: multiply; opacity: .9; }
+.theme-noch .cover.has-photo::after { background: linear-gradient(180deg, rgba(107,15,42,0) 30%, rgba(107,15,42,.85) 100%); }
+.theme-noch .cover.has-photo .cover-names { color: #ffd6e0; }
+
+/* Одно движение на страницу, только для обложки */
+@media (prefers-reduced-motion: no-preference) {
+  .theme-klassika .portico .draw { stroke-dasharray: 900; stroke-dashoffset: 900; animation: draw 2.4s cubic-bezier(.16, 1, .3, 1) .1s forwards; }
+  .theme-sad .pines { animation: rise 1.6s cubic-bezier(.16, 1, .3, 1) both; }
+  .theme-noch .n-num { animation: slam .9s cubic-bezier(.16, 1, .3, 1) .15s both; }
+}
+@keyframes draw { to { stroke-dashoffset: 0; } }
+@keyframes rise { from { transform: translateY(40%); } to { transform: none; } }
+@keyframes slam { from { transform: translateY(18%); opacity: 0; } to { transform: none; opacity: 1; } }
+
+/* ---------- содержание ---------- */
+.sheet { max-width: 640px; margin: 0 auto; padding: 0 20px; }
+.block { padding: 64px 0 8px; }
+.block h2 { font-size: clamp(32px, 8vw, 44px); line-height: 1.1; margin-bottom: 22px; }
+.message { font-size: 1.15em; line-height: 1.55; }
+.theme-klassika .message { font-style: italic; text-align: center; }
+.theme-klassika .block h2 { text-align: center; }
+.theme-klassika .block { border-top: 1px solid var(--line); margin-top: 48px; padding-top: 56px; }
+.theme-klassika .block:first-child { border-top: 0; margin-top: 0; }
+.theme-sad .block h2 { color: var(--mark); }
+.theme-noch .block h2 { font-weight: 800; font-size: clamp(28px, 7vw, 40px); letter-spacing: -.02em; }
+.theme-noch .message { font-size: 1.35em; font-weight: 500; line-height: 1.4; }
+
+.program { list-style: none; margin: 0; padding: 0; }
+.program li { display: grid; grid-template-columns: 4.2em 1fr; gap: 16px; padding: 12px 0; border-bottom: 1px solid var(--line); }
+.program li:last-child { border-bottom: 0; }
+.program time { font-variant-numeric: tabular-nums lining-nums; color: var(--soft); }
+.theme-noch .program time { color: var(--mark); font-weight: 700; }
+.theme-klassika .program { max-width: 420px; margin: 0 auto; }
+
+.venue { font: 400 28px/1.2 var(--display); margin-bottom: 6px; }
+.theme-noch .venue { font-weight: 800; font-size: 24px; }
+.address { color: var(--soft); }
+.theme-klassika .venue, .theme-klassika .address, .theme-klassika .block > p { text-align: center; }
+.theme-klassika .link-btn { display: table; margin: 4px auto 0; }
+.link-btn { display: inline-block; margin-top: 4px; padding: 12px 22px; border: 1px solid currentColor; border-radius: 2px; text-decoration: none; font-size: 16px; }
+.theme-noch .link-btn { border-radius: 999px; font-weight: 700; }
+.link-btn:hover { background: var(--ink); color: var(--ground); }
+
+.swatches { display: flex; gap: 0; margin-top: 18px; }
+.swatch { width: 56px; height: 56px; }
+.theme-klassika .swatches { justify-content: center; }
+.theme-sad .swatch { border-radius: 50% 50% 4px 4px; margin-right: 8px; }
+.theme-noch .swatch { width: 33%; height: 72px; }
+
+/* ---------- анкета ---------- */
+.hint { color: var(--soft); }
+.rsvp { display: grid; gap: 16px; font-size: 16px; }
+.rsvp label { display: block; color: var(--soft); }
+.rsvp input:not([type=radio]):not([type=checkbox]), .rsvp select, .rsvp textarea {
+  display: block; width: 100%; margin-top: 6px; padding: 13px 14px; border: 1px solid var(--line); border-radius: 2px;
+  background: var(--field); color: var(--ink); font: 17px var(--text);
+}
+.rsvp input::placeholder, .rsvp textarea::placeholder { color: var(--soft); opacity: .8; }
+.choice { border: 0; padding: 0; margin: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.choice label { position: relative; color: var(--ink); }
+.choice input { position: absolute; opacity: 0; }
+.choice span { display: block; padding: 14px; text-align: center; border: 1px solid var(--line); border-radius: 2px; cursor: pointer; }
+.choice input:checked + span { background: var(--ink); color: var(--ground); border-color: var(--ink); }
+.choice input:focus-visible + span { outline: 2px solid var(--mark); outline-offset: 3px; }
+.check { display: flex !important; gap: 12px; align-items: flex-start; color: var(--ink) !important; }
+.check input { flex: none; width: 20px; height: 20px; margin: 2px 0 0; accent-color: var(--ink); }
+.theme-sad .check input, .theme-noch .check input { accent-color: var(--mark); }
+.consent { font-size: 14px; }
+.rsvp button { padding: 16px; border: 0; border-radius: 2px; background: var(--button); color: var(--button-ink); font: 600 17px var(--text); cursor: pointer; }
+.theme-noch .rsvp button, .theme-noch .choice span, .theme-noch .rsvp input:not([type=radio]):not([type=checkbox]), .theme-noch .rsvp select, .theme-noch .rsvp textarea { border-radius: 999px; }
+.theme-noch .rsvp textarea { border-radius: 18px; }
+.rsvp button:hover { filter: brightness(1.08); }
+.rsvp.no .if-yes { display: none; }
+.thanks { padding: 14px 16px; border-left: 1px solid var(--mark); background: var(--field); }
+.thanks-err { border-left-color: #c2410c; }
+
+.made { text-align: center; padding: 72px 20px 40px; font-size: 14px; color: var(--soft); }
+.theme-noch .cover.has-photo .cover-lead { position: absolute; }
+
+/* Фото между блоками: два снимка лесенкой, выходят за поля текста */
+.gallery { display: grid; grid-template-columns: 7fr 5fr; gap: 10px; align-items: start; margin: 64px -20px 0; }
+.gallery img { display: block; width: 100%; aspect-ratio: 3 / 4; object-fit: cover; }
+.gallery img:nth-child(2) { margin-top: 72px; aspect-ratio: 4 / 5; }
+@media (min-width: 700px) { .gallery { margin: 80px -80px 0; gap: 16px; } }
+.theme-klassika .gallery img { filter: sepia(.12) saturate(.9); }
+.theme-noch .gallery { grid-template-columns: 5fr 7fr; }
+.theme-noch .gallery img { filter: saturate(.85) contrast(1.05); }
+
+/* Усадьба: тонкая рамка поверх снимка, как у печатного приглашения */
+.theme-klassika .cover.has-photo::before { content: ''; position: absolute; inset: 14px; z-index: 2; border: 1px solid rgba(255,255,255,.55); pointer-events: none; }
+.theme-klassika .cover.has-photo { padding-bottom: 56px; }
+
+/* Афиша: снимок перекрашен в бордовый целиком, без грязи */
+.theme-noch .cover.has-photo .cover-photo { filter: grayscale(1) contrast(1.1) brightness(1.15); mix-blend-mode: luminosity; opacity: 1; }

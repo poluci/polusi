@@ -1,0 +1,14 @@
+# Полная версия с сервером на Render: render.com → New → Blueprint → этот репозиторий.
+services:
+  - type: web
+    name: pozovi
+    runtime: node
+    plan: free
+    buildCommand: "true"
+    startCommand: node server.js
+    healthCheckPath: /
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+      - key: BASE_URL
+        value: https://pozovi.onrender.com
