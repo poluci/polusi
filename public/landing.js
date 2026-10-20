@@ -4,7 +4,7 @@
   function fit() { document.querySelectorAll('.screen').forEach(function (s) { s.firstElementChild.style.transform = 'scale(' + s.clientWidth / 390 + ')'; }); }
   fit(); addEventListener('resize', fit);
 
-  var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }); }, { rootMargin: '0px 0px -8% 0px' });
+  var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }); }, { rootMargin: '0px 0px 15% 0px' });
   document.querySelectorAll('.reveal').forEach(function (el) { io.observe(el); });
 
   var screens = document.querySelectorAll('.story-stage .screen');
