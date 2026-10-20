@@ -5,7 +5,8 @@
   "description": "Сайты-приглашения на свадьбу и праздники",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "build:pages": "BASE_PATH=/polusi SITE_URL=https://poluci.github.io/polusi node scripts/build-static.js"
   },
   "engines": {
     "node": ">=18"
