@@ -182,9 +182,34 @@ function csvFor(event) {
 
 const MESSAGES = {
   'demo-bilet': 'Едем за город на целый день: церемония в саду, ужин на веранде и танцы до последней электрички. Обратный трансфер организуем.',
+  'demo-telegramma': 'Женимся. Без вас никак. Церемония короткая, ужин долгий, танцы до утра. Ответьте до первого июля, чтобы мы успели рассадить всех рядом с теми, кого вы любите.',
+  'demo-menu': 'Мы любим долгие ужины, поэтому свадьба будет одним большим ужином. Шеф готовит пять подач, а мы готовим тосты. Если у вас есть ограничения в еде, напишите в анкете.',
+  'demo-plastinka': 'Сорок лет, а пластинки всё те же. Будет бар, хорошая музыка и все, с кем я её слушал. Заявки на песни принимаю в анкете.',
+  'demo-polaroid': 'Мы собрали снимки за пять лет вместе и поняли, что на всех не хватает вас. Приезжайте в Сосны, будем снимать новые.',
+  'demo-programmka': 'Свадьба в трёх действиях, антракт с шампанским и финал на танцполе. Партер весь ваш, места не нумерованы.',
+  'demo-plakat': 'Десять лет назад мы собрались в подвале на Лиговском. Сегодня нас сто человек. Отмечаем вместе со всеми, кто был рядом.',
+  'demo-kniga': 'Бабушке Нине восемьдесят. Собираемся всей семьёй, со внуками и правнуками. Принесите старые фотографии и истории, бабушка очень их ждёт.',
+  'demo-chat': 'Отмечаю двадцать пять. Будет бар, друзья и немного караоке. Приходите в чём удобно, главное приходите.',
+  'demo-chek': 'Тридцать три, возраст серьёзный, поэтому отмечаем несерьёзно. Бар забронирован, счёт за мной.',
+  'demo-vystavka': 'Мы долго собирали эту выставку из общих поездок, ужинов и смешных снимков. Открытие одно, вход только по приглашениям.',
+  'demo-tablo': 'Двадцать лет после выпуска. Собираемся всем классом, зовём и учителей. Альбомы с собой обязательно.',
+  'demo-vino': 'Мы познакомились на дегустации, поэтому свадьбу празднуем на винодельне. Будут виноградники, длинный стол и закат над Кубанью.',
+  'demo-tetrad': 'Мне будет семь! Будет торт, аниматор и много игр. Мама говорит, чтобы взрослые тоже приходили.',
 };
 const PROGRAMS = {
   'demo-bilet': '15:30 Сбор гостей у дома\n16:00 Церемония в саду\n17:30 Ужин на веранде\n21:00 Танцы и костёр',
+  'demo-telegramma': '18:00 Сбор гостей\n18:30 Церемония\n19:30 Ужин\n22:00 Танцы',
+  'demo-polaroid': '16:00 Сбор гостей на холме\n16:30 Церемония\n18:00 Ужин в шатре\n22:00 Костёр и танцы',
+  'demo-vystavka': '16:00 Открытие и игристое\n16:30 Церемония\n18:00 Ужин\n21:00 Танцы',
+  'demo-plakat': '19:00 Сбор гостей\n20:00 Концерт\n22:00 Вечеринка до утра',
+  'demo-menu': '17:00 Аперитив в саду\n18:00 Ужин из пяти подач\n21:00 Торт\n22:00 Танцы',
+  'demo-plastinka': '20:00 Сбор у бара\n20:30 Первый сет\n22:00 Торт и тосты\n23:00 Танцы до закрытия',
+  'demo-programmka': '17:00 Сбор гостей в фойе\n18:00 Церемония\n19:00 Ужин и тосты\n22:00 Танцы',
+  'demo-kniga': '15:00 Сбор гостей\n15:30 Праздничный обед\n17:00 Фото и воспоминания\n18:00 Чай и торт',
+  'demo-chek': '19:00 Сбор гостей\n19:30 Ужин\n21:00 Торт\n22:00 Танцы',
+  'demo-tablo': '19:00 Встреча в фойе\n19:30 Ужин\n21:00 Слово учителям\n22:00 Танцы',
+  'demo-vino': '16:00 Сбор гостей и игристое\n17:00 Церемония в винограднике\n18:30 Ужин за длинным столом\n21:00 Танцы',
+  'demo-tetrad': '12:00 Встреча гостей\n12:30 Игры с аниматором\n14:00 Обед и торт\n15:00 Подарки',
 };
 
 function seedDemos() {
@@ -201,6 +226,22 @@ function seedDemos() {
     { slug: 'demo-bilet', theme: 'bilet', kind: 'wedding', names: 'Ксения и Лев', date: '2027-08-14', time: '15:30', venue: 'Дача на Оке', address: 'Тульская обл., Поленово', deadline: '2027-07-01', colors: '#29453a, #edf1e6, #b23a2f' },
     { slug: 'demo-kalendar', theme: 'kalendar', kind: 'wedding', names: 'Мария и Денис', date: '2027-06-12', time: '15:00', venue: 'Загородный клуб «Лесное»', address: 'Ленинградская обл., Репино', colors: '#8a6670, #e9dfdc, #c9b8a8',
       photoUrl: '/static/photos/glavnaya-bereg.jpg' },
+    { slug: 'demo-tablo', theme: 'tablo', kind: 'other', names: 'Встреча выпускников', date: '2027-06-27', time: '19:00', venue: 'Кафе «Перрон»', address: 'Москва, Комсомольская пл., 3', colors: '#23262b, #f0b429, #f1f2f0' },
+    { slug: 'demo-plastinka', theme: 'plastinka', kind: 'birthday', names: 'Серёга, 40', date: '2027-02-20', time: '20:00', venue: 'Бар «Пластинка»', address: 'Москва, Мясницкая ул., 13', colors: '#2d3a5a, #e4572e, #f3f2ef',
+      photoUrl: '/static/photos/afisha-bar.jpg' },
+    { slug: 'demo-polaroid', theme: 'polaroid', kind: 'wedding', names: 'Лиза и Артём', date: '2027-08-07', time: '16:00', venue: 'Загородный клуб «Сосны»', address: 'Ленинградская обл., Всеволожский р-н, Сосны', colors: '#d6d8d4, #7f9a6e, #2e3a58',
+      photoUrl: '/static/photos/sosny-holm.jpg', gallery: ['/static/photos/sosny-les.jpg', '/static/photos/usadba-rotonda.jpg'] },
+    { slug: 'demo-telegramma', theme: 'telegramma', kind: 'wedding', names: 'Вера и Олег', date: '2027-07-17', time: '18:00', venue: 'Ресторан «Пушкинъ»', address: 'Москва, Тверской бульвар, 26А', deadline: '2027-07-01', colors: '#2d4a7a, #9aa6b2, #763e8c' },
+    { slug: 'demo-menu', theme: 'menu', kind: 'wedding', names: 'Таня и Саша', date: '2027-07-03', time: '17:00', venue: 'Ресторан «Сад»', address: 'Москва, Петровский бульвар, 21', colors: '#5e2433, #dddcd3, #23241f' },
+    { slug: 'demo-programmka', theme: 'programmka', kind: 'wedding', names: 'Наташа и Глеб', date: '2027-10-09', time: '17:00', venue: 'Театр-кафе «Маска»', address: 'Санкт-Петербург, наб. реки Фонтанки, 65', colors: '#9e2428, #2a1d1a, #e5ddd6' },
+    { slug: 'demo-vino', theme: 'vino', kind: 'wedding', names: 'Дарья и Илья', date: '2027-09-18', time: '16:00', venue: 'Винодельня «Южная»', address: 'Краснодарский край, Темрюкский р-н', colors: '#4a1c25, #b8a77c, #2b2e22' },
+    { slug: 'demo-vystavka', theme: 'vystavka', kind: 'wedding', names: 'Вика и Ян', date: '2027-05-15', time: '16:00', venue: 'Центр «Винзавод»', address: 'Москва, 4-й Сыромятнический пер., 1/8', colors: '#1b1b1a, #c4c4bf, #7f8a7a',
+      photoUrl: '/static/photos/usadba-rotonda.jpg', gallery: ['/static/photos/glavnaya-konfetti.jpg', '/static/photos/sosny-les.jpg'] },
+    { slug: 'demo-kniga', theme: 'kniga', kind: 'other', names: 'Юбилей бабушки Нины', date: '2027-03-03', time: '15:00', venue: 'Ресторан «Чехов»', address: 'Москва, ул. Чехова, 6', colors: '#e8721c, #1f1f1d, #fbfaf7' },
+    { slug: 'demo-plakat', theme: 'plakat', kind: 'other', names: 'Север 10 лет', date: '2026-12-25', time: '19:00', venue: 'Клуб «Огни»', address: 'Санкт-Петербург, Лиговский пр., 50', colors: '#e2231a, #141414, #ededea' },
+    { slug: 'demo-chat', theme: 'chat', kind: 'birthday', names: 'Даша, 25', date: '2027-04-17', time: '19:00', venue: 'Бар «Сделано»', address: 'Москва, Покровка, 17', colors: '#3a8ee6, #dcf4c8, #e7a35a' },
+    { slug: 'demo-chek', theme: 'chek', kind: 'birthday', names: 'Костя, 33', date: '2027-01-23', time: '19:00', venue: 'Бар «Жигули»', address: 'Москва, Новый Арбат, 11', colors: '#3b3f45, #c8c4b8, #222222' },
+    { slug: 'demo-tetrad', theme: 'tetrad', kind: 'birthday', names: 'Миша, 7 лет', date: '2027-04-10', time: '12:00', venue: 'Детский клуб «Космос»', address: 'Москва, ул. Строителей, 4', colors: '#233a8a, #d1342f, #f8fafc', dresscode: 'Удобная одежда для игр. Можно в костюме космонавта.' },
   ];
   const common = {
     message: 'Дорогие друзья! Мы будем счастливы разделить с вами этот день. Приходите, будет красиво, вкусно и очень душевно.',
@@ -224,6 +265,7 @@ function seedDemos() {
       continue;
     }
     const event = { id: crypto.randomUUID(), key: d.slug === 'demo-klassika' ? 'demo-kabinet' : crypto.randomBytes(12).toString('base64url'), demo: true, createdAt: Date.now(), ...common, ...d,
+      dresscode: d.dresscode || (d.kind === 'wedding' ? common.dresscode : 'Как вам удобно. Если хочется, поддержите цвета праздника.'),
       program: PROGRAMS[d.slug] || (d.kind === 'birthday' ? '19:00 Встреча гостей\n19:30 Ужин\n21:00 Сюрприз от друзей\n22:00 Танцы' : d.kind === 'other' ? '18:00 Сбор гостей\n18:30 Ужин\n20:00 Программа вечера\n22:00 Танцы' : common.program),
       message: MESSAGES[d.slug] || (d.kind === 'birthday' ? 'Мне исполняется 30, и я хочу встретить эту дату с самыми близкими. Приходите!' : d.kind === 'other' ? 'Будет вечер, который запомнится. Ждём всех, приходите!' : common.message) };
     db.events.push(event);

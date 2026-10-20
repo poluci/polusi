@@ -6,7 +6,9 @@ const BRAND = 'Позови';
 const MONTHS = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'];
 const WEEKDAYS = ['воскресенье', 'понедельник', 'вторник', 'среда', 'четверг', 'пятница', 'суббота'];
 const THEMES = {
-  zhurnal: 'Журнал', otkrytka: 'Открытка', bilet: 'Билет', kalendar: 'Календарь', klassika: 'Усадьба', sad: 'Белые ночи', noch: 'Афиша',
+  zhurnal: 'Журнал', otkrytka: 'Открытка', bilet: 'Билет', kalendar: 'Календарь', tablo: 'Табло', plastinka: 'Пластинка', polaroid: 'Полароид',
+  telegramma: 'Телеграмма', menu: 'Меню', programmka: 'Программка', vino: 'Этикетка', vystavka: 'Выставка', kniga: 'Книга', plakat: 'Плакат',
+  chat: 'Чат', chek: 'Чек', tetrad: 'Тетрадь', klassika: 'Усадьба', sad: 'Белые ночи', noch: 'Афиша',
 };
 const KINDS = { wedding: 'Свадьба', birthday: 'День рождения', other: 'Другой праздник' };
 
@@ -181,6 +183,19 @@ const THEME_INFO = {
   klassika: 'Портик подмосковной усадьбы',
   sad: 'Северное небо над кромкой леса',
   noch: 'Имя и возраст во весь экран',
+  tablo: 'Вокзальное табло, буквы перещёлкиваются',
+  plastinka: 'Конверт пластинки, гость достаёт диск',
+  polaroid: 'Стопка снимков, гость их перебирает',
+  telegramma: 'Бланк телеграммы с наклеенными строчками',
+  menu: 'Карточка меню, программа как подачи',
+  programmka: 'Театральная программка с действующими лицами',
+  vino: 'Винная этикетка с годом урожая',
+  vystavka: 'Фото на стене галереи с музейной этикеткой',
+  kniga: 'Обложка классической книжной серии',
+  plakat: 'Швейцарский плакат с огромной датой',
+  chat: 'Переписка в мессенджере',
+  chek: 'Кассовый чек выезжает из аппарата',
+  tetrad: 'Тетрадь в клетку, написано от руки',
 };
 
 function builder({ event = {}, errors = [], editKey = null }) {
@@ -260,10 +275,25 @@ const INVITE_FONTS = {
   otkrytka: 'family=Old+Standard+TT:ital,wght@0,400;0,700;1,400',
   bilet: 'family=IBM+Plex+Sans+Condensed:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500',
   kalendar: 'family=PT+Serif:ital,wght@0,400;0,700;1,400',
+  telegramma: 'family=PT+Mono&family=PT+Sans+Narrow:wght@400;700',
+  menu: 'family=Spectral:ital,wght@0,300;0,400;0,500;1,300;1,400',
+  plastinka: 'family=Dela+Gothic+One&family=Manrope:wght@400;500;700',
+  polaroid: 'family=Caveat:wght@500;700&family=Lora:ital,wght@0,400;1,400',
+  programmka: 'family=Playfair+Display:ital,wght@0,400;0,600;1,400;1,600',
+  plakat: 'family=Geologica:wght@400;600;800',
+  kniga: 'family=Jost:ital,wght@0,400;0,500;1,400',
+  chat: 'family=Roboto:wght@400;500',
+  chek: 'family=Cousine:wght@400;700',
+  vystavka: 'family=Inter+Tight:ital,wght@0,400;0,600;1,400',
+  tablo: 'family=Oswald:wght@500;600&family=Roboto+Condensed:wght@400;500',
+  vino: 'family=Prata&family=Lora:ital,wght@0,400;1,400',
+  tetrad: 'family=Neucha',
 };
 
 const THEME_COLOR = {
   klassika: '#efe0a8', sad: '#d9e4e8', noch: '#6b0f2a', zhurnal: '#27313b', otkrytka: '#c5ccd3', bilet: '#29453a', kalendar: '#ffffff',
+  telegramma: '#9aa6b2', menu: '#f6f5f1', plastinka: '#2d3a5a', polaroid: '#d6d8d4', programmka: '#faf8f4', plakat: '#ededea', kniga: '#e8721c',
+  chat: '#dfe7ee', chek: '#3b3f45', vystavka: '#f2f2f0', tablo: '#23262b', vino: '#2b2e22', tetrad: '#f8fafc',
 };
 const BIG_NUMBER = ['noch'];
 
@@ -390,6 +420,245 @@ function coverZhurnal(e, { lead, dateLine, photoSrc }) {
 
 const COVERS = { kalendar: coverKalendar, otkrytka: coverOtkrytka, bilet: coverBilet, zhurnal: coverZhurnal };
 
+// Пары «первое имя, второе имя» для шаблонов, где люди перечислены по ролям
+function splitNames(names) {
+  return String(names || '').split(/\s+(?:и|&)\s+|\s*&\s*/).filter(Boolean);
+}
+
+const dmy = (iso) => { const [y, m, d] = (iso || '').split('-'); return iso ? `${d}.${m}.${y}` : ''; };
+
+function coverTelegramma(e, { lead, dateLine }) {
+  const strip = (cls, text, tag = 'p') => `<${tag} class="tg-strip ${cls}">${text}</${tag}>`;
+  return `
+<header class="cover">
+  <div class="tg-form">
+    <p class="tg-title">Телеграмма</p>
+    <dl class="tg-meta"><div><dt>Кому</dt><dd>вам</dd></div><div><dt>Слов</dt><dd>${[lead, e.names, dateLine, e.venue, 'Ждём'].join(' ').split(/\s+/).filter(Boolean).length}</dd></div></dl>
+    <div class="tg-strips">
+      ${strip('cover-lead', lead)}
+      ${strip('cover-names', esc(e.names), 'h1')}
+      ${strip('cover-date', esc(dateLine))}
+      ${e.venue ? strip('tg-venue', esc(e.venue)) : ''}
+      ${strip('tg-end', 'Ждём')}
+    </div>
+    ${e.date ? `<p class="tg-stamp" aria-hidden="true"><span>${esc(dmy(e.date))}</span></p>` : ''}
+  </div>
+</header>`;
+}
+
+function coverMenu(e, { lead, dateLine }) {
+  const courses = (e.program || '').split('\n').map((l) => l.trim().replace(/^\d{1,2}[:.]\d{2}\s*[-—–]?\s*/, '')).filter(Boolean).slice(0, 5);
+  return `
+<header class="cover">
+  <div class="menu-card">
+    <p class="cover-lead">${lead}</p>
+    <h1 class="cover-names">${esc(e.names)}</h1>
+    <p class="menu-rule" aria-hidden="true"></p>
+    ${courses.length ? `<ul class="menu-courses">${courses.map((c) => `<li>${esc(c)}</li>`).join('')}</ul><p class="menu-rule" aria-hidden="true"></p>` : ''}
+    <p class="cover-date">${esc(dateLine)}</p>
+    ${e.venue ? `<p class="menu-venue">${esc(e.venue)}</p>` : ''}
+  </div>
+</header>`;
+}
+
+function coverPlastinka(e, { lead, dateLine, photoSrc }) {
+  return `
+<header class="cover">
+  <div class="record" role="button" tabindex="0" aria-label="Достать пластинку" aria-pressed="false">
+    <div class="disc" aria-hidden="true"><span class="disc-label"><b>${esc(e.names)}</b><small>Сторона А</small></span></div>
+    <div class="sleeve">
+      ${photoSrc ? `<img class="cover-photo" src="${esc(photoSrc)}" alt="">` : ''}
+      <h1 class="cover-names">${esc(e.names)}</h1>
+    </div>
+  </div>
+  <p class="cover-lead">${lead}</p>
+  <p class="cover-date">${esc(dateLine)}</p>
+  <p class="record-hint">Нажмите на конверт, чтобы достать пластинку</p>
+</header>`;
+}
+
+function coverPolaroid(e, { lead, dateLine, photoSrc }) {
+  const shots = [photoSrc, ...(e.gallery || [])].filter(Boolean).slice(0, 3);
+  while (shots.length < 3) shots.push('');
+  const caps = [esc(e.names), esc(e.date ? formatDate(e.date, false) : ''), esc(e.venue || '')];
+  return `
+<header class="cover">
+  <div class="stack" role="button" tabindex="0" aria-label="Следующее фото">
+    ${shots.map((src, i) => `<figure class="snap s${i}">${src ? `<img${i === 0 ? ' class="cover-photo"' : ''} src="${esc(src)}" alt="">` : '<span class="snap-empty"></span>'}<figcaption>${i === 0 ? `<span class="cover-names">${caps[0]}</span>` : caps[i]}</figcaption></figure>`).reverse().join('')}
+  </div>
+  <p class="cover-lead">${lead}</p>
+  <p class="cover-date">${esc(dateLine)}</p>
+</header>`;
+}
+
+function coverProgrammka(e, { lead, dateLine }) {
+  const [a, b] = splitNames(e.names);
+  const cast = e.kind === 'wedding' && b
+    ? [['Невеста', a], ['Жених', b], ['Гости', 'вы']]
+    : [[e.kind === 'birthday' ? 'Именинник' : 'Хозяева вечера', e.names], ['Гости', 'вы']];
+  return `
+<header class="cover">
+  <div class="playbill">
+    ${e.venue ? `<p class="pb-house">${esc(e.venue)}</p>` : ''}
+    <p class="cover-lead">${lead}</p>
+    <h1 class="cover-names">${esc(e.names)}</h1>
+    <p class="pb-genre">${e.kind === 'wedding' ? 'свадьба в трёх действиях' : 'праздник в трёх действиях'}</p>
+    <p class="pb-cast-title">Действующие лица</p>
+    <dl class="pb-cast">${cast.map(([r, n]) => `<div><dt>${r}</dt><dd>${esc(n)}</dd></div>`).join('')}</dl>
+    <p class="cover-date">${esc(dateLine)}</p>
+  </div>
+</header>`;
+}
+
+function coverPlakat(e, { lead, dateLine }) {
+  const [, m, d] = (e.date || '----').split('-');
+  return `
+<header class="cover">
+  <div class="pl-top">
+    <h1 class="cover-names">${esc(e.names)}</h1>
+    <p class="cover-lead">${lead}</p>
+  </div>
+  ${e.date ? `<p class="pl-date" aria-hidden="true"><span data-to="${d}">${d}</span><span data-to="${m}">${m}</span></p>` : ''}
+  <div class="pl-bottom">
+    <p class="cover-date">${esc(dateLine)}</p>
+    ${e.venue ? `<p class="pl-venue">${esc(e.venue)}</p>` : ''}
+  </div>
+</header>`;
+}
+
+function coverKniga(e, { lead, dateLine }) {
+  return `
+<header class="cover">
+  <div class="book">
+    <p class="book-band book-series">Библиотека праздника</p>
+    <div class="book-title">
+      <h1 class="cover-names">${esc(e.names)}</h1>
+      <p class="book-rule" aria-hidden="true"></p>
+      <p class="cover-lead">${lead}</p>
+    </div>
+    <p class="book-band book-foot"><span class="cover-date">${esc(dateLine)}</span></p>
+  </div>
+</header>`;
+}
+
+function coverChat(e, { lead, dateLine }) {
+  const ini = initials(e.names);
+  return `
+<header class="cover">
+  <div class="chat">
+    <div class="chat-bar"><span class="chat-ava">${ini.map(esc).join('')}</span><div><b>${esc(e.names)}</b><small>в сети</small></div></div>
+    <div class="chat-feed">
+      <p class="msg in"><span>Привет! Это</span> <span class="cover-names">${esc(e.names)}</span></p>
+      <p class="msg in cover-lead">${lead}</p>
+      <p class="msg in cover-date">${esc(dateLine)}</p>
+      ${e.venue ? `<p class="msg in msg-place"><b>${esc(e.venue)}</b>${e.address ? `<small>${esc(e.address)}</small>` : ''}</p>` : ''}
+      <p class="msg out">Ура! Где ответить?</p>
+      <p class="msg in"><a href="#rsvp">В анкете ниже, это минута</a></p>
+    </div>
+  </div>
+</header>`;
+}
+
+function coverChek(e, { lead, dateLine }) {
+  const items = (e.program || '').split('\n').map((l) => l.trim()).filter(Boolean).slice(0, 6)
+    .map((l) => { const mm = l.match(/^(\d{1,2}[:.]\d{2})\s*[-—–]?\s*(.*)$/); return mm ? [mm[2], mm[1].replace('.', ':')] : [l, '']; });
+  return `
+<header class="cover">
+  <div class="slot" aria-hidden="true"></div>
+  <div class="receipt">
+    <p class="rc-shop">${esc(e.venue || 'Праздник')}</p>
+    ${e.address ? `<p class="rc-addr">${esc(e.address)}</p>` : ''}
+    <p class="rc-kind">Кассовый чек</p>
+    <p class="rc-row"><span>${esc(dmy(e.date))}</span><span>${esc(e.time || '')}</span></p>
+    <p class="cover-lead">${lead}</p>
+    <h1 class="cover-names">${esc(e.names)}</h1>
+    <ul class="rc-items">${items.map(([t, time]) => `<li><span>${esc(t)}</span><span>${esc(time)}</span></li>`).join('')}</ul>
+    <p class="rc-total"><span>Итого</span><span>1 вечер</span></p>
+    <p class="cover-date">${esc(dateLine)}</p>
+    <p class="rc-bar" aria-hidden="true"></p>
+    <p class="rc-thanks">Ждём вас</p>
+  </div>
+</header>`;
+}
+
+function coverVystavka(e, { lead, dateLine, photoSrc }) {
+  const color = ((e.colors || '').match(/#[0-9a-fA-F]{3,8}/) || ['#7f8a7a'])[0];
+  const [y] = (e.date || '').split('-');
+  return `
+<header class="cover">
+  <figure class="artwork">${photoSrc ? `<img class="cover-photo" src="${esc(photoSrc)}" alt="">` : `<span class="art-field" style="background:${color}"></span>`}</figure>
+  <div class="wall-label">
+    <h1 class="cover-names">${esc(e.names)}</h1>
+    <p class="wl-title">${e.kind === 'wedding' ? 'Свадьба' : e.kind === 'birthday' ? 'День рождения' : 'Праздник'}${y ? `, ${y}` : ''}</p>
+    <p class="cover-lead">${lead}</p>
+    <p class="cover-date">${esc(dateLine)}</p>
+    ${e.venue ? `<p class="wl-venue">${esc(e.venue)}</p>` : ''}
+  </div>
+</header>`;
+}
+
+// Табло: каждая буква в своей ячейке, при загрузке ячейки перещёлкиваются до нужной буквы
+function flaps(text) {
+  return String(text || '').toUpperCase().split(' ').filter(Boolean)
+    .map((w) => `<span class="word">${[...w].map((c) => `<span class="flap" data-c="${esc(c)}">${esc(c)}</span>`).join('')}</span>`).join('');
+}
+
+function coverTablo(e, { lead, dateLine }) {
+  const row = (label, text, cls = '') => text ? `<div class="board-row ${cls}"><dt>${label}</dt><dd>${flaps(text)}</dd></div>` : '';
+  return `
+<header class="cover">
+  <dl class="board">
+    ${row('Время', e.time || '', 'num')}
+    ${row('Дата', dmy(e.date).slice(0, 5), 'num')}
+    ${row('Куда', e.venue || '')}
+  </dl>
+  <p class="cover-lead">${lead}</p>
+  <h1 class="cover-names">${esc(e.names)}</h1>
+  <p class="cover-date">${esc(dateLine)}</p>
+</header>`;
+}
+
+function coverVino(e, { lead, dateLine }) {
+  const [y] = (e.date || '').split('-');
+  return `
+<header class="cover">
+  <div class="label">
+    ${y ? `<p class="lb-year">Урожай ${y}</p>` : ''}
+    <h1 class="cover-names">${esc(e.names)}</h1>
+    <p class="cover-lead">${lead}</p>
+    <p class="lb-rule" aria-hidden="true"></p>
+    <p class="lb-made">Разлито ${e.date ? esc(formatDate(e.date, false)) : ''}${e.venue ? `<br>${esc(e.venue)}` : ''}</p>
+    <p class="cover-date">${esc(dateLine)}</p>
+  </div>
+</header>`;
+}
+
+function coverTetrad(e, { lead, dateLine }) {
+  const [, m, d] = (e.date || '').split('-');
+  return `
+<header class="cover">
+  <div class="page">
+    ${e.date ? `<p class="tt-date">${Number(d)} ${MONTHS[Number(m) - 1]}</p>` : ''}
+    <p class="tt-kind">Приглашение</p>
+    <p class="cover-lead">${lead}</p>
+    <h1 class="cover-names">${esc(e.names)}</h1>
+    <p class="cover-date">${esc(dateLine)}</p>
+    ${e.venue ? `<p class="tt-venue">${esc(e.venue)}</p>` : ''}
+    <p class="tt-mark" aria-hidden="true">${e.kind === 'birthday' ? 'Жду!' : 'Ждём!'}</p>
+  </div>
+</header>`;
+}
+
+Object.assign(COVERS, {
+  telegramma: coverTelegramma, menu: coverMenu, plastinka: coverPlastinka, polaroid: coverPolaroid, programmka: coverProgrammka,
+  plakat: coverPlakat, kniga: coverKniga, chat: coverChat, chek: coverChek, vystavka: coverVystavka, tablo: coverTablo, vino: coverVino, tetrad: coverTetrad,
+});
+
+// Заголовок программы на языке шаблона
+const PROGRAM_TITLE = {
+  menu: 'Меню вечера', plastinka: 'Сторона А', programmka: 'Действия', kniga: 'Содержание', chek: 'Позиции', tablo: 'Расписание', telegramma: 'Программа ТЧК',
+};
+
 
 // Портик усадьбы: фронтон, антаблемент и шесть колонн одной линией
 function porticoSvg() {
@@ -500,7 +769,7 @@ ${calendar}
 
 ${(e.gallery || []).length ? `<figure class="gallery">${e.gallery.slice(0, 2).map((src) => `<img src="${esc(src)}" alt="" loading="lazy">`).join('')}</figure>` : ''}
 
-${program ? `<section class="block"><h2>Как пройдёт день</h2><ol class="program">${program}</ol></section>` : ''}
+${program ? `<section class="block"><h2>${PROGRAM_TITLE[e.theme] || 'Как пройдёт день'}</h2><ol class="program">${program}</ol></section>` : ''}
 
 ${e.venue || e.address ? `<section class="block"><h2>Где</h2>
   ${e.venue ? `<p class="venue">${esc(e.venue)}</p>` : ''}

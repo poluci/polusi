@@ -1,4 +1,4 @@
-// Сайт-приглашение: обратный отсчёт, анкета и то, что гость делает руками: переворачивает открытку,
+// Сайт-приглашение: обратный отсчёт, анкета и то, что гость делает руками: переворачивает открытку, достаёт пластинку, перебирает снимки,
 // отрывает корешок билета; в календаре день обводится, когда до него докрутили
 (function () {
   var embedded = window.self !== window.top;
@@ -61,5 +61,85 @@
       if (es[0].isIntersecting) { month.classList.add('drawn'); io.disconnect(); }
     }, { threshold: .6 });
     io.observe(month);
+  }
+
+  var onPress = function (el, fn) {
+    el.addEventListener('click', fn);
+    el.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); fn(); } });
+  };
+
+  // Пластинка: по нажатию диск выезжает из конверта и крутится
+  var record = document.querySelector('.record');
+  if (record) onPress(record, function () {
+    var on = record.classList.toggle('out');
+    record.setAttribute('aria-pressed', on ? 'true' : 'false');
+  });
+
+  // Полароид: верхний снимок уходит в сторону и ложится под низ стопки
+  var stack = document.querySelector('.stack');
+  if (stack) {
+    var snaps = [].slice.call(stack.querySelectorAll('.snap')).reverse();
+    var busy = false;
+    onPress(stack, function () {
+      if (busy) return;
+      busy = true;
+      snaps[0].classList.add('away');
+      setTimeout(function () {
+        snaps.push(snaps.shift());
+        snaps.forEach(function (s, i) { s.classList.remove('s0', 's1', 's2', 'away'); s.classList.add('s' + i); });
+        busy = false;
+      }, calm ? 0 : 420);
+    });
+  }
+
+  // Плакат: цифры даты набегают от нуля
+  var nums = document.querySelectorAll('.pl-date [data-to]');
+  if (nums.length && !calm) {
+    var t0 = performance.now();
+    var run = function (now) {
+      var k = Math.min(1, (now - t0) / 1100), ease = 1 - Math.pow(1 - k, 4);
+      [].forEach.call(nums, function (el) { el.textContent = String(Math.round(ease * Number(el.dataset.to))).padStart(2, '0'); });
+      if (k < 1) requestAnimationFrame(run);
+    };
+    requestAnimationFrame(run);
+  }
+
+  // Табло: каждая ячейка перещёлкивает буквы и останавливается на своей
+  var flaps = document.querySelectorAll('.flap');
+  if (flaps.length && !calm) {
+    var ABC = 'АБВГДЕЖЗИКЛМНОПРСТУФЦЧШЭЯ', DIG = '0123456789';
+    [].forEach.call(flaps, function (el, i) {
+      var want = el.dataset.c, pool = /\d/.test(want) ? DIG : /[А-ЯЁA-Z]/.test(want) ? ABC : '';
+      if (!pool) return;
+      var left = 6 + (i % 7) + Math.floor(Math.random() * 6);
+      el.classList.add('spin');
+      var tick = setInterval(function () {
+        if (--left <= 0) { clearInterval(tick); el.textContent = want; el.classList.remove('spin'); return; }
+        el.textContent = pool[Math.floor(Math.random() * pool.length)];
+      }, 70);
+    });
+  }
+
+  // Чат: сообщения приходят по одному, перед входящими «печатает»
+  var feed = document.querySelector('.chat-feed');
+  if (feed && !calm && !embedded) {
+    var msgs = [].slice.call(feed.querySelectorAll('.msg'));
+    var typing = document.createElement('p');
+    typing.className = 'typing';
+    typing.setAttribute('aria-hidden', 'true');
+    typing.innerHTML = '<i></i><i></i><i></i>';
+    msgs.forEach(function (m) { m.classList.add('wait'); });
+    var next = function (i) {
+      if (i >= msgs.length) return;
+      var m = msgs[i], incoming = m.classList.contains('in');
+      if (incoming) feed.appendChild(typing);
+      setTimeout(function () {
+        if (typing.parentNode) typing.remove();
+        m.classList.remove('wait');
+        m.classList.add('pop');
+        next(i + 1);
+      }, incoming ? 650 + Math.min(900, m.textContent.length * 14) : 700);
+    };
+    setTimeout(function () { next(0); }, 300);
   }
 })();
