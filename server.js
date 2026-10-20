@@ -181,16 +181,10 @@ function csvFor(event) {
 // ---------- демо-сайты для лендинга ----------
 
 const MESSAGES = {
-  'demo-neon': 'Мне 25, и я хочу отметить это громко. Танцы до утра, приходите!',
-  'demo-disko': 'Возвращаемся в 80-е на один вечер. Будет диско, будут блёстки, будете вы.',
-  'demo-retro': 'Сорок лет, а душа всё ещё в семидесятых. Собираемся, ставим винил и танцуем.',
-  'demo-detsky': 'Мише исполняется 7! Будут батут, торт, аниматоры и много шариков. Ждём ребят с родителями.',
-  'demo-kino': 'Мы прошли этот фильм вместе. Осталась последняя сцена, и без вас она не снимется.',
-  'demo-minimal': 'Десять лет назад нас было трое. Отмечаем вместе со всеми, кто сделал «Север».',
+  'demo-bilet': 'Едем за город на целый день: церемония в саду, ужин на веранде и танцы до последней электрички. Обратный трансфер организуем.',
 };
 const PROGRAMS = {
-  'demo-detsky': '12:00 Сбор гостей\n12:30 Аниматоры и батут\n14:00 Пицца\n15:00 Торт и свечи',
-  'demo-neon': '21:00 Сбор гостей\n22:00 Сет диджея\n00:00 Торт\n01:00 Танцы до утра',
+  'demo-bilet': '15:30 Сбор гостей у дома\n16:00 Церемония в саду\n17:30 Ужин на веранде\n21:00 Танцы и костёр',
 };
 
 function seedDemos() {
@@ -201,17 +195,12 @@ function seedDemos() {
       photoUrl: '/static/photos/sosny-cover.jpg', gallery: ['/static/photos/sosny-holm.jpg', '/static/photos/sosny-les.jpg'] },
     { slug: 'demo-noch', theme: 'noch', kind: 'birthday', names: 'Катя, 30', date: '2026-12-12', time: '19:00', venue: 'Ресторан «Северяне»', address: 'Москва, ул. Большая Дмитровка, 7/5', colors: '#ffd6e0, #ffe15c, #ffffff', dresscode: 'Яркое и нарядное, блёстки приветствуются.',
       photoUrl: '/static/photos/afisha-cover.jpg', gallery: ['/static/photos/afisha-tost.jpg', '/static/photos/afisha-bar.jpg'] },
-    { slug: 'demo-konvert', theme: 'konvert', kind: 'wedding', names: 'Ольга и Иван', date: '2027-05-22', time: '14:00', venue: 'Особняк Смирнова', address: 'Москва, Тверской бульвар, 22', colors: '#f4ead9, #8c2f39, #c9a96e' },
-    { slug: 'demo-zvezdy', theme: 'zvezdy', kind: 'wedding', names: 'Ника и Глеб', date: '2027-09-11', time: '18:00', venue: 'Шале «Высота»', address: 'Карачаево-Черкесия, Архыз', colors: '#0b1029, #f2cf7a, #eef0ff' },
-    { slug: 'demo-more', theme: 'more', kind: 'wedding', names: 'Лиза и Артём', date: '2027-08-08', time: '17:00', venue: 'Пляж «Ривьера»', address: 'Сочи, Приморская набережная, 1', colors: '#8fd3ec, #0b6c9c, #f2f8fb' },
-    { slug: 'demo-sakura', theme: 'sakura', kind: 'wedding', names: 'Вера и Олег', date: '2027-04-17', time: '15:00', venue: 'Ботанический сад', address: 'Санкт-Петербург, ул. Профессора Попова, 2', colors: '#fde8ee, #d9577f, #ffffff' },
-    { slug: 'demo-akvarel', theme: 'akvarel', kind: 'wedding', names: 'Таня и Саша', date: '2027-07-03', time: '16:00', venue: 'Усадьба «Середниково»', address: 'Московская обл., Солнечногорск, Середниково', colors: '#f6c7c7, #c7dcf6, #d6efd2' },
-    { slug: 'demo-neon', theme: 'neon', kind: 'birthday', names: 'Дима, 25', date: '2026-11-28', time: '21:00', venue: 'Клуб «Мутабор»', address: 'Москва, Шарикоподшипниковская ул., 13', dresscode: 'Что-нибудь светящееся. Чем ярче, тем лучше.', colors: '#ff2bd6, #2bf3ff, #0b0a14' },
-    { slug: 'demo-disko', theme: 'disko', kind: 'birthday', names: 'Лена, 35', date: '2027-02-20', time: '20:00', venue: 'Ресторан «Диско-бар 80»', address: 'Санкт-Петербург, Невский пр., 74', dresscode: 'Блёстки, клёш и прически как в 80-х.', colors: '#ffd23f, #ff5ebc, #7a5cff' },
-    { slug: 'demo-retro', theme: 'retro', kind: 'birthday', names: 'Серёга, 40', date: '2027-03-14', time: '19:00', venue: 'Бар «Винил»', address: 'Казань, ул. Баумана, 44', dresscode: 'Клёш, водолазки и большие очки.', colors: '#e8a33d, #d9541e, #5e2414' },
-    { slug: 'demo-kino', theme: 'kino', kind: 'other', names: 'Выпускной 11 «Б»', date: '2027-06-27', time: '18:00', venue: 'Кинотеатр «Победа»', address: 'Новосибирск, ул. Ленина, 7', dresscode: 'Чёрное и белое, как в старом кино.', colors: '#141414, #f1eee8, #e8c547' },
-    { slug: 'demo-minimal', theme: 'minimal', kind: 'other', names: 'Север 10 лет', date: '2026-12-25', time: '19:00', venue: 'Лофт «Фабрика»', address: 'Москва, Переведеновский пер., 18', dresscode: 'Свободный. Удобная обувь обязательна.', colors: '#111111, #ff4d00, #ffffff' },
-    { slug: 'demo-detsky', theme: 'detsky', kind: 'birthday', names: 'Мише 7 лет', date: '2027-05-15', time: '12:00', venue: 'Детский клуб «Облака»', address: 'Екатеринбург, ул. Малышева, 5', dresscode: 'Удобная одежда, будем прыгать на батуте.', colors: '#ff6b6b, #ffd93d, #4d96ff' },
+    { slug: 'demo-zhurnal', theme: 'zhurnal', kind: 'wedding', names: 'Алиса и Марк', date: '2027-09-04', time: '16:00', venue: 'Ресторан «Белуга»', address: 'Москва, ул. Моховая, 15/1', colors: '#27313b, #d9d4cc, #8c8c84',
+      photoUrl: '/static/photos/glavnaya-hero.jpg', gallery: ['/static/photos/glavnaya-konfetti.jpg', '/static/photos/usadba-stol.jpg'] },
+    { slug: 'demo-otkrytka', theme: 'otkrytka', kind: 'wedding', names: 'Ольга и Иван', date: '2027-05-22', time: '14:00', venue: 'Особняк Смирнова', address: 'Москва, Тверской бульвар, 22', colors: '#1e2b4a, #c5ccd3, #fbfbf8' },
+    { slug: 'demo-bilet', theme: 'bilet', kind: 'wedding', names: 'Ксения и Лев', date: '2027-08-14', time: '15:30', venue: 'Дача на Оке', address: 'Тульская обл., Поленово', deadline: '2027-07-01', colors: '#29453a, #edf1e6, #b23a2f' },
+    { slug: 'demo-kalendar', theme: 'kalendar', kind: 'wedding', names: 'Мария и Денис', date: '2027-06-12', time: '15:00', venue: 'Загородный клуб «Лесное»', address: 'Ленинградская обл., Репино', colors: '#8a6670, #e9dfdc, #c9b8a8',
+      photoUrl: '/static/photos/glavnaya-bereg.jpg' },
   ];
   const common = {
     message: 'Дорогие друзья! Мы будем счастливы разделить с вами этот день. Приходите, будет красиво, вкусно и очень душевно.',
@@ -221,6 +210,13 @@ function seedDemos() {
     deadline: '',
   };
   let changed = false;
+  // Демо шаблонов, которых больше нет, убираем вместе с ответами
+  const stale = db.events.filter((e) => e.demo && !THEMES.includes(e.theme)).map((e) => e.id);
+  if (stale.length) {
+    db.events = db.events.filter((e) => !stale.includes(e.id));
+    db.rsvps = db.rsvps.filter((r) => !stale.includes(r.eventId));
+    changed = true;
+  }
   for (const d of demos) {
     const old = findBySlug(d.slug);
     if (old) {

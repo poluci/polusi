@@ -6,8 +6,7 @@ const BRAND = 'Позови';
 const MONTHS = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'];
 const WEEKDAYS = ['воскресенье', 'понедельник', 'вторник', 'среда', 'четверг', 'пятница', 'суббота'];
 const THEMES = {
-  klassika: 'Усадьба', sad: 'Белые ночи', noch: 'Афиша', konvert: 'Конверт', zvezdy: 'Звёздное небо', more: 'Море',
-  sakura: 'Цветение', akvarel: 'Акварель', neon: 'Неон', disko: 'Диско', retro: 'Ретро', kino: 'Плёнка', minimal: 'Минимал', detsky: 'Детский',
+  zhurnal: 'Журнал', otkrytka: 'Открытка', bilet: 'Билет', kalendar: 'Календарь', klassika: 'Усадьба', sad: 'Белые ночи', noch: 'Афиша',
 };
 const KINDS = { wedding: 'Свадьба', birthday: 'День рождения', other: 'Другой праздник' };
 
@@ -175,20 +174,13 @@ function landing() {
 // ---------- конструктор ----------
 
 const THEME_INFO = {
-  klassika: 'Портик усадьбы рисуется линией',
-  sad: 'Сосновый лес поднимается снизу',
-  noch: 'Огромный возраст и блёстки за пальцем',
-  konvert: 'Гость открывает конверт с печатью',
-  zvezdy: 'Звёзды двигаются за пальцем',
-  more: 'Волны и пузырьки',
-  sakura: 'Падают лепестки сакуры',
-  akvarel: 'Пятна краски перетекают',
-  neon: 'Мигающая вывеска и свет за пальцем',
-  disko: 'Диско-шар, нажмите и смените свет',
-  retro: 'Вращающееся солнце 70-х',
-  kino: 'Плёнка, зерно и печатная машинка',
-  minimal: 'Бегущая строка с именами',
-  detsky: 'Шарики, которые лопаются',
+  zhurnal: 'Обложка журнала на вашем фото',
+  otkrytka: 'Плотная открытка с тиснёной монограммой, гость её переворачивает',
+  bilet: 'Пригласительный билет с отрывным корешком',
+  kalendar: 'Узкая колонка, фото и календарь с обведённым днём',
+  klassika: 'Портик подмосковной усадьбы',
+  sad: 'Северное небо над кромкой леса',
+  noch: 'Имя и возраст во весь экран',
 };
 
 function builder({ event = {}, errors = [], editKey = null }) {
@@ -208,9 +200,8 @@ function builder({ event = {}, errors = [], editKey = null }) {
 ${header()}
 <main class="builder">
   <div class="builder-intro">
-    <p class="eyebrow">${editKey ? 'Редактирование' : 'Конструктор'}</p>
-    <h1>${editKey ? 'Поправим <i>детали</i>' : 'Соберём ваше <i>приглашение</i>'}</h1>
-    <p class="sub">${editKey ? 'Гости увидят изменения сразу, ссылка останется прежней.' : 'Пять коротких шагов. Справа сразу видно, как сайт увидят гости.'}</p>
+    <h1>${editKey ? 'Редактирование' : 'Новое приглашение'}</h1>
+    <p class="sub">${editKey ? 'Гости увидят изменения сразу, ссылка останется прежней.' : 'Справа видно, как сайт увидят гости.'}</p>
   </div>
   ${event.demo ? '<p class="note">Это демо-приглашение, изменения в нём не сохраняются.</p>' : ''}
   ${errors.length ? `<div class="errors" role="alert">${errors.map((e) => `<p>${esc(e)}</p>`).join('')}</div>` : ''}
@@ -242,7 +233,7 @@ ${header()}
           <label class="field"><span>Контакт для вопросов</span><input name="contact" value="${v('contact')}" placeholder="Ольга, +7 900 000-00-00"></label>
           <label class="field"><span>Ответить до</span><input type="date" name="deadline" value="${v('deadline')}"></label>
         </div>`)}
-      ${card('05', 'Стиль', `${Object.keys(THEMES).length} шаблонов, у каждого своя анимация. <a href="/templates" target="_blank">Посмотреть все</a>`, `<div class="themes">${themePick}</div>`)}
+      ${card('05', 'Шаблон', '<a href="/templates" target="_blank">Посмотреть все на весь экран</a>', `<div class="themes">${themePick}</div>`)}
       <div class="submit-bar">
         <button class="btn btn-dark" type="submit"${event.demo ? ' disabled' : ''}>${editKey ? 'Сохранить изменения' : 'Создать приглашение'}</button>
         <span>${editKey ? 'Ссылка для гостей не изменится' : 'Бесплатно, пока сервис в тестовом режиме'}</span>
@@ -265,24 +256,140 @@ const INVITE_FONTS = {
   klassika: 'family=Forum&family=Alegreya:ital,wght@0,400;0,500;1,400',
   sad: 'family=Yeseva+One&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,500;1,7..72,400',
   noch: 'family=Unbounded:wght@400;800&family=Manrope:wght@400;500;700',
-  konvert: 'family=Marck+Script&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400',
-  zvezdy: 'family=Cormorant+Garamond:ital,wght@0,500;1,500&family=Montserrat:wght@400;500;600',
-  more: 'family=Prata&family=Nunito:wght@400;600;700',
-  sakura: 'family=Philosopher:wght@400;700&family=Lora:ital,wght@0,400;1,400',
-  akvarel: 'family=Marck+Script&family=Lora:ital,wght@0,400;0,600;1,400',
-  neon: 'family=Rubik+Mono+One&family=Manrope:wght@400;500;700',
-  disko: 'family=Unbounded:wght@400;800&family=Manrope:wght@400;500;700',
-  retro: 'family=Rubik:wght@400;700;900',
-  kino: 'family=Oswald:wght@500;600&family=PT+Mono',
-  minimal: 'family=Inter+Tight:wght@400;600;700',
-  detsky: 'family=Comfortaa:wght@700&family=Nunito:wght@400;700;800',
+  zhurnal: 'family=Noto+Serif+Display:ital,wdth,wght@0,62.5..100,300..800;1,62.5..100,300..800&family=Golos+Text:wght@400;500;600',
+  otkrytka: 'family=Old+Standard+TT:ital,wght@0,400;0,700;1,400',
+  bilet: 'family=IBM+Plex+Sans+Condensed:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500',
+  kalendar: 'family=PT+Serif:ital,wght@0,400;0,700;1,400',
 };
 
 const THEME_COLOR = {
-  klassika: '#efe0a8', sad: '#d9e4e8', noch: '#6b0f2a', konvert: '#f4ead9', zvezdy: '#070b1f', more: '#8fd3ec', sakura: '#fde8ee',
-  akvarel: '#fbf7f2', neon: '#07060d', disko: '#190a2e', retro: '#f3d9a4', kino: '#0c0c0c', minimal: '#ffffff', detsky: '#5ec2ff',
+  klassika: '#efe0a8', sad: '#d9e4e8', noch: '#6b0f2a', zhurnal: '#27313b', otkrytka: '#c5ccd3', bilet: '#29453a', kalendar: '#ffffff',
 };
-const BIG_NUMBER = ['noch', 'neon', 'disko', 'retro'];
+const BIG_NUMBER = ['noch'];
+
+// Обложки шаблонов, у которых своя разметка. Классы cover-lead, cover-names и cover-date
+// сохранены, чтобы живой предпросмотр в конструкторе подставлял в них текст.
+
+const pad2 = (n) => String(n).padStart(2, '0');
+
+function initials(names) {
+  const parts = String(names || '').split(/\s+(?:и|&)\s+|\s*&\s*/).filter(Boolean);
+  const first = (s) => (s.trim()[0] || '').toUpperCase();
+  return parts.length > 1 ? [first(parts[0]), first(parts[1])] : [first(parts[0] || '')];
+}
+
+// Сетка месяца с днём праздника, неделя с понедельника
+function monthGrid(iso) {
+  const [y, m, d] = iso.split('-').map(Number);
+  const first = (new Date(Date.UTC(y, m - 1, 1)).getUTCDay() + 6) % 7;
+  const days = new Date(Date.UTC(y, m, 0)).getUTCDate();
+  const cells = Array(first).fill('<td></td>');
+  for (let i = 1; i <= days; i++) {
+    cells.push(i === d
+      ? `<td class="day-on"><svg viewBox="0 0 40 40" aria-hidden="true"><path d="M20 4c9 0 16 7 16 16s-7 16-16 16S4 29 4 20 11 3 21 5"/></svg><b>${i}</b></td>`
+      : `<td>${i}</td>`);
+  }
+  while (cells.length % 7) cells.push('<td></td>');
+  const rows = [];
+  for (let i = 0; i < cells.length; i += 7) rows.push(`<tr>${cells.slice(i, i + 7).join('')}</tr>`);
+  const month = MONTHS_NOM[m - 1];
+  return `<table class="month" aria-label="${month} ${y}"><caption>${month} ${y}</caption>
+    <thead><tr><th>пн</th><th>вт</th><th>ср</th><th>чт</th><th>пт</th><th class="we">сб</th><th class="we">вс</th></tr></thead>
+    <tbody>${rows.join('')}</tbody></table>`;
+}
+
+const MONTHS_NOM = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
+
+function weekday(iso) {
+  const [y, m, d] = iso.split('-').map(Number);
+  return WEEKDAYS[new Date(Date.UTC(y, m - 1, d)).getUTCDay()];
+}
+
+function coverKalendar(e, { lead, dateLine, photoSrc }) {
+  const [y, m, d] = (e.date || '----').split('-');
+  const ini = initials(e.names);
+  return `
+<header class="cover">
+  ${e.date ? `<p class="kal-date"><span>${y}</span><span>${m}</span><span>${d}</span></p>
+  <p class="kal-day">${weekday(e.date)}${e.time ? `, ${esc(e.time)}` : ''}</p>` : ''}
+  ${photoSrc
+    ? `<figure class="kal-photo"><img class="cover-photo" src="${esc(photoSrc)}" alt="" fetchpriority="high"></figure>`
+    : `<p class="kal-mono" aria-hidden="true">${ini.map(esc).join('<span></span>')}</p>`}
+  <p class="cover-lead">${lead}</p>
+  <h1 class="cover-names">${esc(e.names)}</h1>
+  <p class="cover-date">${esc(dateLine)}</p>
+  ${e.venue ? `<p class="kal-venue">${esc(e.venue)}</p>` : ''}
+</header>`;
+}
+
+function coverOtkrytka(e, { lead, dateLine, photoSrc }) {
+  const ini = initials(e.names);
+  const front = photoSrc
+    ? `<img class="cover-photo" src="${esc(photoSrc)}" alt="">`
+    : `<span class="mono">${ini.length > 1 ? `${esc(ini[0])}<i>и</i>${esc(ini[1])}` : esc(ini[0])}</span>`;
+  return `
+<header class="cover">
+  <div class="postcard" tabindex="0" role="button" aria-pressed="false" aria-label="Перевернуть открытку">
+    <div class="postcard-inner">
+      <div class="postcard-face postcard-front${photoSrc ? ' with-photo' : ''}">${front}</div>
+      <div class="postcard-face postcard-back">
+        <p class="cover-lead">${lead}</p>
+        <h1 class="cover-names">${esc(e.names)}</h1>
+        <p class="cover-date">${esc(dateLine)}</p>
+        ${e.venue ? `<p class="postcard-venue">${esc(e.venue)}</p>` : ''}
+      </div>
+    </div>
+  </div>
+  <p class="postcard-hint">Нажмите на открытку, чтобы перевернуть</p>
+</header>`;
+}
+
+function coverBilet(e, { lead, dateLine }) {
+  const [y, m, d] = (e.date || '').split('-');
+  const no = (e.slug || '').split('').reduce((h, c) => (h * 31 + c.charCodeAt(0)) % 900000, 7) + 100000;
+  const field = (label, value, cls = '') => value ? `<div class="${cls}"><dt>${label}</dt><dd>${value}</dd></div>` : '';
+  return `
+<header class="cover">
+  <article class="ticket">
+    <div class="ticket-main">
+      <p class="ticket-head"><span>Пригласительный билет</span><span class="ticket-no">№ ${no}</span></p>
+      <p class="cover-lead">${lead}</p>
+      <h1 class="cover-names">${esc(e.names)}</h1>
+      <dl class="ticket-fields">
+        ${field('Дата', e.date ? `${d}.${m}.${y}` : '', 'num')}
+        ${field('Время', esc(e.time), 'num')}
+        ${field('Куда', esc(e.venue), 'wide')}
+        ${field('Адрес', esc(e.address), 'wide small')}
+      </dl>
+      <p class="cover-date">${esc(dateLine)}</p>
+    </div>
+    <a class="ticket-stub" href="#rsvp">
+      <span>Корешок</span>
+      <b>Ответить</b>
+      ${e.deadline ? `<small>до ${formatDate(e.deadline, false)}</small>` : '<small>в анкете ниже</small>'}
+    </a>
+  </article>
+</header>`;
+}
+
+function coverZhurnal(e, { lead, dateLine, photoSrc }) {
+  const [y, m] = (e.date || '').split('-');
+  const issue = e.date ? `${MONTHS_NOM[Number(m) - 1]} ${y}` : '';
+  return `
+<header class="cover${photoSrc ? ' has-photo' : ''}">
+  ${photoSrc ? `<img class="cover-photo" src="${esc(photoSrc)}" alt="" fetchpriority="high">` : ''}
+  <p class="zh-issue">${issue}${issue ? ', ' : ''}специальный выпуск</p>
+  <h1 class="cover-names">${esc(e.names)}</h1>
+  <div class="zh-lines">
+    <p class="cover-lead">${lead}</p>
+    <p class="cover-date">${esc(dateLine)}</p>
+    ${e.venue ? `<p class="zh-venue">${esc(e.venue)}</p>` : ''}
+  </div>
+</header>`;
+}
+
+const COVERS = { kalendar: coverKalendar, otkrytka: coverOtkrytka, bilet: coverBilet, zhurnal: coverZhurnal };
+
 
 // Портик усадьбы: фронтон, антаблемент и шесть колонн одной линией
 function porticoSvg() {
@@ -364,39 +471,45 @@ function invite(e, { baseUrl, ok }) {
 <meta property="og:url" content="${esc(baseUrl)}/i/${esc(e.slug)}">
 <meta property="og:site_name" content="${BRAND}">
 ${ogImage ? `<meta property="og:image" content="${esc(ogImage)}">` : ''}
-<meta name="theme-color" content="${THEME_COLOR[e.theme] || THEME_COLOR.klassika}">
-<script>document.documentElement.classList.add('js')</script>`;
+<meta name="theme-color" content="${THEME_COLOR[e.theme] || THEME_COLOR.klassika}">`;
   const photoSrc = e.photo ? `/u/${e.photo}` : e.photoUrl || '';
   const art = !photoSrc && e.theme === 'klassika' ? porticoSvg() : '';
   const horizon = !photoSrc && e.theme === 'sad' ? pinesSvg() : '';
   const photo = photoSrc ? `<img class="cover-photo" src="${esc(photoSrc)}" alt="" fetchpriority="high">` : '';
-  const body = `
+  const countdown = e.date ? `<div class="countdown" data-date="${esc(e.date)}T${esc(e.time || '12:00')}:00+03:00" aria-label="До праздника осталось"></div>` : '';
+  const cover = COVERS[e.theme]
+    ? COVERS[e.theme](e, { lead, dateLine, photoSrc })
+    : `
 <header class="cover${photoSrc ? ' has-photo' : ''}">
   ${photo}
-  <div class="fx" aria-hidden="true"></div>
   ${art}
   <p class="cover-lead">${lead}</p>
   <h1 class="cover-names">${coverNames(e)}</h1>
   <p class="cover-date">${esc(dateLine)}</p>
-  ${e.date ? `<div class="countdown" data-date="${esc(e.date)}T${esc(e.time || '12:00')}:00+03:00" aria-label="До праздника осталось"></div>` : ''}
+  ${countdown}
   ${horizon}
-</header>
+</header>`;
+  const calendar = e.theme === 'kalendar' && e.date
+    ? `<section class="block block-calendar">${monthGrid(e.date)}${countdown}</section>` : '';
+  const body = `
+${cover}
 
 <main class="sheet">
-${e.message ? `<section class="block block-message rv"><p class="message">${esc(e.message).replace(/\n/g, '<br>')}</p></section>` : ''}
+${e.message ? `<section class="block block-message"><p class="message">${esc(e.message).replace(/\n/g, '<br>')}</p></section>` : ''}
+${calendar}
 
-${(e.gallery || []).length ? `<figure class="gallery rv">${e.gallery.slice(0, 2).map((src) => `<img src="${esc(src)}" alt="" loading="lazy">`).join('')}</figure>` : ''}
+${(e.gallery || []).length ? `<figure class="gallery">${e.gallery.slice(0, 2).map((src) => `<img src="${esc(src)}" alt="" loading="lazy">`).join('')}</figure>` : ''}
 
-${program ? `<section class="block rv"><h2>Как пройдёт день</h2><ol class="program">${program}</ol></section>` : ''}
+${program ? `<section class="block"><h2>Как пройдёт день</h2><ol class="program">${program}</ol></section>` : ''}
 
-${e.venue || e.address ? `<section class="block rv"><h2>Где</h2>
+${e.venue || e.address ? `<section class="block"><h2>Где</h2>
   ${e.venue ? `<p class="venue">${esc(e.venue)}</p>` : ''}
   ${e.address ? `<p class="address">${esc(e.address)}</p><a class="link-btn" href="${mapUrl}" target="_blank" rel="noopener">Открыть в Яндекс Картах</a>` : ''}
 </section>` : ''}
 
-${e.dresscode || colors ? `<section class="block rv"><h2>Что надеть</h2>${e.dresscode ? `<p>${esc(e.dresscode)}</p>` : ''}${colors ? `<div class="swatches">${colors}</div>` : ''}</section>` : ''}
+${e.dresscode || colors ? `<section class="block"><h2>Что надеть</h2>${e.dresscode ? `<p>${esc(e.dresscode)}</p>` : ''}${colors ? `<div class="swatches">${colors}</div>` : ''}</section>` : ''}
 
-<section id="rsvp" class="block block-rsvp rv">
+<section id="rsvp" class="block block-rsvp">
   <h2>Вы придёте?</h2>
   ${e.deadline ? `<p class="hint">Ответьте, пожалуйста, до ${formatDate(e.deadline, false)}.</p>` : ''}
   ${thanks}
@@ -415,7 +528,7 @@ ${e.dresscode || colors ? `<section class="block rv"><h2>Что надеть</h2
   </form>
 </section>
 
-${e.contact ? `<section class="block rv"><h2>Если есть вопросы</h2><p>${esc(e.contact)}</p></section>` : ''}
+${e.contact ? `<section class="block"><h2>Если есть вопросы</h2><p>${esc(e.contact)}</p></section>` : ''}
 </main>
 
 <footer class="made">Сделано в <a href="/?from=${esc(e.slug)}">${BRAND}</a></footer>
@@ -498,7 +611,7 @@ document.querySelectorAll('[data-copy]').forEach(function (b) {
 
 function templates() {
   const cards = Object.entries(THEMES).map(([k, label]) => `
-    <article class="tpl rv">
+    <article class="tpl">
       <a class="tpl-phone" href="/i/demo-${k}" target="_blank" aria-label="Открыть пример: ${label}"><span class="screen"><iframe data-src="/i/demo-${k}" title="${label}" tabindex="-1" aria-hidden="true"></iframe></span></a>
       <div class="tpl-info"><h2>${label}</h2><p>${THEME_INFO[k]}</p>
       <div class="tpl-actions"><a class="btn btn-dark btn-sm" href="/new?theme=${k}">Выбрать</a><a class="btn btn-ghost btn-sm" href="/i/demo-${k}" target="_blank">Открыть</a></div></div>
@@ -507,9 +620,8 @@ function templates() {
 ${header()}
 <main class="gallery-page">
   <div class="builder-intro">
-    <p class="eyebrow">${Object.keys(THEMES).length} шаблонов</p>
-    <h1>Каждый <i>живой</i></h1>
-    <p class="sub">У каждого шаблона своя анимация на обложке, а гости могут с ней поиграть: открыть конверт, лопнуть шарик, сменить свет. Нажмите «Открыть», чтобы посмотреть на весь экран.</p>
+    <h1>Шаблоны</h1>
+    <p class="sub">Откройте любой, чтобы посмотреть на весь экран. Тексты и фото в примерах заменятся вашими.</p>
   </div>
   <div class="tpls">${cards}</div>
 </main>
