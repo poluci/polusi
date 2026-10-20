@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Дима, 25: зову на день рождения</title>
+
+<meta name="description" content="Зову на день рождения. 28 ноября 2026, суббота, в 21:00. Клуб «Мутабор»">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Дима, 25">
+<meta property="og:description" content="Зову на день рождения. 28 ноября 2026, суббота, в 21:00. Клуб «Мутабор»">
+<meta property="og:url" content="https://poluci.github.io/polusi/i/demo-neon">
+<meta property="og:site_name" content="Позови">
+
+<meta name="theme-color" content="#07060d">
+<script>document.documentElement.classList.add('js')</script>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Rubik+Mono+One&family=Manrope:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/polusi/static/invite.css">
+</head>
+<body class="theme-neon">
+
+<header class="cover">
+  
+  <div class="fx" aria-hidden="true"></div>
+  
+  <p class="cover-lead">Зову на день рождения</p>
+  <h1 class="cover-names"><span class="n-name">Дима</span><span class="n-num">25</span></h1>
+  <p class="cover-date">28 ноября 2026, суббота, в 21:00</p>
+  <div class="countdown" data-date="2026-11-28T21:00:00+03:00" aria-label="До праздника осталось"></div>
+  
+</header>
+
+<main class="sheet">
+<section class="block block-message rv"><p class="message">Мне 25, и я хочу отметить это громко. Танцы до утра, приходите!</p></section>
+
+
+
+<section class="block rv"><h2>Как пройдёт день</h2><ol class="program"><li><time>21:00</time><span>Сбор гостей</span></li><li><time>22:00</time><span>Сет диджея</span></li><li><time>00:00</time><span>Торт</span></li><li><time>01:00</time><span>Танцы до утра</span></li></ol></section>
+
+<section class="block rv"><h2>Где</h2>
+  <p class="venue">Клуб «Мутабор»</p>
+  <p class="address">Москва, Шарикоподшипниковская ул., 13</p><a class="link-btn" href="https://yandex.ru/maps/?text=%D0%9C%D0%BE%D1%81%D0%BA%D0%B2%D0%B0%2C%20%D0%A8%D0%B0%D1%80%D0%B8%D0%BA%D0%BE%D0%BF%D0%BE%D0%B4%D1%88%D0%B8%D0%BF%D0%BD%D0%B8%D0%BA%D0%BE%D0%B2%D1%81%D0%BA%D0%B0%D1%8F%20%D1%83%D0%BB.%2C%2013" target="_blank" rel="noopener">Открыть в Яндекс Картах</a>
+</section>
+
+<section class="block rv"><h2>Что надеть</h2><p>Что-нибудь светящееся. Чем ярче, тем лучше.</p><div class="swatches"><span class="swatch" style="background:#ff2bd6"></span><span class="swatch" style="background:#2bf3ff"></span><span class="swatch" style="background:#0b0a14"></span></div></section>
+
+<section id="rsvp" class="block block-rsvp rv">
+  <h2>Вы придёте?</h2>
+  
+  
+  <form method="post" action="/polusi/i/demo-neon/rsvp" class="rsvp">
+    <label>Имя и фамилия<input name="name" required maxlength="100" autocomplete="name"></label>
+    <fieldset class="choice"><legend class="sr">Ваш ответ</legend>
+      <label><input type="radio" name="attending" value="yes" checked><span>Приду</span></label>
+      <label><input type="radio" name="attending" value="no"><span>Не смогу</span></label>
+    </fieldset>
+    <label class="if-yes">Сколько вас будет, вместе с вами<select name="count"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select></label>
+    <label class="if-yes">Пожелания по меню<input name="menu" maxlength="300" placeholder="Например, без мяса"></label>
+    <label class="check if-yes"><input type="checkbox" name="transfer"><span>Нужен трансфер</span></label>
+    <label>Комментарий<textarea name="comment" rows="2" maxlength="1000"></textarea></label>
+    <label class="check consent"><input type="checkbox" name="consent" required><span>Согласен на обработку моих данных организаторами для подготовки праздника (<a href="/polusi/privacy" target="_blank">политика</a>)</span></label>
+    <button type="submit">Отправить ответ</button>
+  </form>
+</section>
+
+<section class="block rv"><h2>Если есть вопросы</h2><p>Организатор Ольга, +7 900 000-00-00</p></section>
+</main>
+
+<footer class="made">Сделано в <a href="/polusi/?from=demo-neon">Позови</a></footer>
+
+<script src="/polusi/static/invite.js" defer></script>
+<script>document.addEventListener('submit',function(e){e.preventDefault();alert('Это витрина сайта. Создание приглашений и ответы гостей заработают на полной версии с сервером.');});</script></body>
+</html>
