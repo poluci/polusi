@@ -12,7 +12,8 @@ const BASE = (process.env.BASE_PATH || '').replace(/\/$/, '');
 const SITE_URL = process.env.SITE_URL || `http://localhost${BASE}`;
 const PORT = 3999;
 
-const PAGES = ['/', '/privacy', '/new', '/i/demo-klassika', '/i/demo-sad', '/i/demo-noch', '/c/demo-kabinet', '/c/demo-kabinet/edit'];
+const { THEMES } = require('../views');
+const PAGES = ['/', '/privacy', '/new', '/templates', '/c/demo-kabinet', '/c/demo-kabinet/edit', ...Object.keys(THEMES).map((k) => `/i/demo-${k}`)];
 const FILES = ['/c/demo-kabinet/guests.csv'];
 
 const NOTICE = `<script>document.addEventListener('submit',function(e){e.preventDefault();alert('Это витрина сайта. Создание приглашений и ответы гостей заработают на полной версии с сервером.');});</script>`;

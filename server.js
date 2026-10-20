@@ -123,7 +123,7 @@ function savePhoto(buf) {
 }
 
 const clip = (v, max = 500) => String(v || '').trim().slice(0, max);
-const THEMES = ['klassika', 'sad', 'noch'];
+const THEMES = Object.keys(views.THEMES);
 const KINDS = ['wedding', 'birthday', 'other'];
 
 function eventFromForm(f) {
@@ -180,6 +180,19 @@ function csvFor(event) {
 
 // ---------- демо-сайты для лендинга ----------
 
+const MESSAGES = {
+  'demo-neon': 'Мне 25, и я хочу отметить это громко. Танцы до утра, приходите!',
+  'demo-disko': 'Возвращаемся в 80-е на один вечер. Будет диско, будут блёстки, будете вы.',
+  'demo-retro': 'Сорок лет, а душа всё ещё в семидесятых. Собираемся, ставим винил и танцуем.',
+  'demo-detsky': 'Мише исполняется 7! Будут батут, торт, аниматоры и много шариков. Ждём ребят с родителями.',
+  'demo-kino': 'Мы прошли этот фильм вместе. Осталась последняя сцена, и без вас она не снимется.',
+  'demo-minimal': 'Десять лет назад нас было трое. Отмечаем вместе со всеми, кто сделал «Север».',
+};
+const PROGRAMS = {
+  'demo-detsky': '12:00 Сбор гостей\n12:30 Аниматоры и батут\n14:00 Пицца\n15:00 Торт и свечи',
+  'demo-neon': '21:00 Сбор гостей\n22:00 Сет диджея\n00:00 Торт\n01:00 Танцы до утра',
+};
+
 function seedDemos() {
   const demos = [
     { slug: 'demo-klassika', theme: 'klassika', kind: 'wedding', names: 'Анна и Михаил', date: '2027-06-19', time: '15:00', venue: 'Усадьба «Архангельское»', address: 'Московская обл., Красногорск, пос. Архангельское', colors: '#f3ece1, #c9a96e, #8a8f7a',
@@ -188,6 +201,17 @@ function seedDemos() {
       photoUrl: '/static/photos/sosny-cover.jpg', gallery: ['/static/photos/sosny-holm.jpg', '/static/photos/sosny-les.jpg'] },
     { slug: 'demo-noch', theme: 'noch', kind: 'birthday', names: 'Катя, 30', date: '2026-12-12', time: '19:00', venue: 'Ресторан «Северяне»', address: 'Москва, ул. Большая Дмитровка, 7/5', colors: '#ffd6e0, #ffe15c, #ffffff', dresscode: 'Яркое и нарядное, блёстки приветствуются.',
       photoUrl: '/static/photos/afisha-cover.jpg', gallery: ['/static/photos/afisha-tost.jpg', '/static/photos/afisha-bar.jpg'] },
+    { slug: 'demo-konvert', theme: 'konvert', kind: 'wedding', names: 'Ольга и Иван', date: '2027-05-22', time: '14:00', venue: 'Особняк Смирнова', address: 'Москва, Тверской бульвар, 22', colors: '#f4ead9, #8c2f39, #c9a96e' },
+    { slug: 'demo-zvezdy', theme: 'zvezdy', kind: 'wedding', names: 'Ника и Глеб', date: '2027-09-11', time: '18:00', venue: 'Шале «Высота»', address: 'Карачаево-Черкесия, Архыз', colors: '#0b1029, #f2cf7a, #eef0ff' },
+    { slug: 'demo-more', theme: 'more', kind: 'wedding', names: 'Лиза и Артём', date: '2027-08-08', time: '17:00', venue: 'Пляж «Ривьера»', address: 'Сочи, Приморская набережная, 1', colors: '#8fd3ec, #0b6c9c, #f2f8fb' },
+    { slug: 'demo-sakura', theme: 'sakura', kind: 'wedding', names: 'Вера и Олег', date: '2027-04-17', time: '15:00', venue: 'Ботанический сад', address: 'Санкт-Петербург, ул. Профессора Попова, 2', colors: '#fde8ee, #d9577f, #ffffff' },
+    { slug: 'demo-akvarel', theme: 'akvarel', kind: 'wedding', names: 'Таня и Саша', date: '2027-07-03', time: '16:00', venue: 'Усадьба «Середниково»', address: 'Московская обл., Солнечногорск, Середниково', colors: '#f6c7c7, #c7dcf6, #d6efd2' },
+    { slug: 'demo-neon', theme: 'neon', kind: 'birthday', names: 'Дима, 25', date: '2026-11-28', time: '21:00', venue: 'Клуб «Мутабор»', address: 'Москва, Шарикоподшипниковская ул., 13', dresscode: 'Что-нибудь светящееся. Чем ярче, тем лучше.', colors: '#ff2bd6, #2bf3ff, #0b0a14' },
+    { slug: 'demo-disko', theme: 'disko', kind: 'birthday', names: 'Лена, 35', date: '2027-02-20', time: '20:00', venue: 'Ресторан «Диско-бар 80»', address: 'Санкт-Петербург, Невский пр., 74', dresscode: 'Блёстки, клёш и прически как в 80-х.', colors: '#ffd23f, #ff5ebc, #7a5cff' },
+    { slug: 'demo-retro', theme: 'retro', kind: 'birthday', names: 'Серёга, 40', date: '2027-03-14', time: '19:00', venue: 'Бар «Винил»', address: 'Казань, ул. Баумана, 44', dresscode: 'Клёш, водолазки и большие очки.', colors: '#e8a33d, #d9541e, #5e2414' },
+    { slug: 'demo-kino', theme: 'kino', kind: 'other', names: 'Выпускной 11 «Б»', date: '2027-06-27', time: '18:00', venue: 'Кинотеатр «Победа»', address: 'Новосибирск, ул. Ленина, 7', dresscode: 'Чёрное и белое, как в старом кино.', colors: '#141414, #f1eee8, #e8c547' },
+    { slug: 'demo-minimal', theme: 'minimal', kind: 'other', names: 'Север 10 лет', date: '2026-12-25', time: '19:00', venue: 'Лофт «Фабрика»', address: 'Москва, Переведеновский пер., 18', dresscode: 'Свободный. Удобная обувь обязательна.', colors: '#111111, #ff4d00, #ffffff' },
+    { slug: 'demo-detsky', theme: 'detsky', kind: 'birthday', names: 'Мише 7 лет', date: '2027-05-15', time: '12:00', venue: 'Детский клуб «Облака»', address: 'Екатеринбург, ул. Малышева, 5', dresscode: 'Удобная одежда, будем прыгать на батуте.', colors: '#ff6b6b, #ffd93d, #4d96ff' },
   ];
   const common = {
     message: 'Дорогие друзья! Мы будем счастливы разделить с вами этот день. Приходите, будет красиво, вкусно и очень душевно.',
@@ -204,8 +228,8 @@ function seedDemos() {
       continue;
     }
     const event = { id: crypto.randomUUID(), key: d.slug === 'demo-klassika' ? 'demo-kabinet' : crypto.randomBytes(12).toString('base64url'), demo: true, createdAt: Date.now(), ...common, ...d,
-      program: d.kind === 'birthday' ? '19:00 Встреча гостей\n19:30 Ужин\n21:00 Сюрприз от друзей\n22:00 Танцы' : common.program,
-      message: d.kind === 'birthday' ? 'Мне исполняется 30, и я хочу встретить эту дату с самыми близкими. Приходите!' : common.message };
+      program: PROGRAMS[d.slug] || (d.kind === 'birthday' ? '19:00 Встреча гостей\n19:30 Ужин\n21:00 Сюрприз от друзей\n22:00 Танцы' : d.kind === 'other' ? '18:00 Сбор гостей\n18:30 Ужин\n20:00 Программа вечера\n22:00 Танцы' : common.program),
+      message: MESSAGES[d.slug] || (d.kind === 'birthday' ? 'Мне исполняется 30, и я хочу встретить эту дату с самыми близкими. Приходите!' : d.kind === 'other' ? 'Будет вечер, который запомнится. Ждём всех, приходите!' : common.message) };
     db.events.push(event);
     if (d.slug === 'demo-klassika') {
       const sample = [
@@ -239,6 +263,7 @@ async function handle(req, res) {
   }
   if (method === 'GET' && p === '/') return send(res, 200, views.landing());
   if (method === 'GET' && p === '/privacy') return send(res, 200, views.privacy());
+  if (method === 'GET' && p === '/templates') return send(res, 200, views.templates());
 
   if (p === '/new') {
     if (method === 'GET') return send(res, 200, views.builder({ event: { theme: url.searchParams.get('theme') || 'klassika', kind: 'wedding' } }));

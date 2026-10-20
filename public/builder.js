@@ -51,6 +51,14 @@
     addEventListener('resize', fit);
   }
 
+  // Шаблон из ссылки ?theme=… (на витрине без сервера тоже работает)
+  var want = (location.search.match(/[?&]theme=([a-z]+)/) || [])[1];
+  var radio = want && form.querySelector('input[name=theme][value=' + want + ']');
+  if (radio && !radio.checked) {
+    radio.checked = true;
+    if (frame) frame.src = frame.src.replace(/\/i\/[a-z0-9-]+$/, '/i/demo-' + want);
+  }
+
   form.addEventListener('input', render);
   form.addEventListener('change', function (e) {
     var t = e.target;
