@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Новое приглашение — Позови</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Lora:ital,wght@0,400;0,600;1,400&family=Playfair+Display:wght@400;600&family=Golos+Text:wght@400;500;600&family=Forum&family=Yeseva+One&family=Unbounded:wght@800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/polusi/static/app.css">
+</head>
+<body class="">
+
+<header class="top"><a class="logo" href="/polusi/">Позови</a><nav><a href="/polusi/#examples">Примеры</a><a href="/polusi/#prices">Цены</a><a class="btn btn-sm" href="/polusi/new">Создать</a></nav></header>
+<main class="narrow">
+  <h1>Новое приглашение</h1>
+  
+  
+  <form method="post" action="/polusi/new" class="form" enctype="multipart/form-data">
+    <fieldset>
+      <legend>Событие</legend>
+      <label>Тип события<select name="kind"><option value="wedding" selected>Свадьба</option><option value="birthday">День рождения</option><option value="other">Другой праздник</option></select></label>
+      <label>Имена или название<input name="names" value="" placeholder="Анна и Михаил" required maxlength="80"></label>
+      <div class="row">
+        <label>Дата<input type="date" name="date" value="" required></label>
+        <label>Время<input type="time" name="time" value=""></label>
+      </div>
+    </fieldset>
+    <fieldset>
+      <legend>Фото</legend>
+      
+      <label>Фото для обложки <small>JPG, PNG или WebP до 8 МБ. Лучше вертикальное</small><input type="file" name="photo" accept="image/jpeg,image/png,image/webp"></label>
+    </fieldset>
+    <fieldset>
+      <legend>Место</legend>
+      <label>Название места<input name="venue" value="" placeholder="Ресторан «Сад»"></label>
+      <label>Адрес<input name="address" value="" placeholder="Москва, ул. Садовая, 1"></label>
+    </fieldset>
+    <fieldset>
+      <legend>Текст</legend>
+      <label>Обращение к гостям<textarea name="message" rows="4" placeholder="Дорогие друзья! Мы будем счастливы..."></textarea></label>
+      <label>Программа дня <small>каждый пункт с новой строки, время в начале</small><textarea name="program" rows="4" placeholder="15:00 Сбор гостей&#10;16:00 Церемония"></textarea></label>
+      <label>Дресс-код<textarea name="dresscode" rows="2"></textarea></label>
+      <label>Цвета праздника <small>через запятую, например #f3ece1, #c9a96e</small><input name="colors" value=""></label>
+      <label>Контакт для вопросов<input name="contact" value="" placeholder="Организатор Ольга, +7 900 000-00-00"></label>
+      <label>Ответить до<input type="date" name="deadline" value=""></label>
+    </fieldset>
+    <fieldset>
+      <legend>Стиль</legend>
+      <div class="themes"><label class="theme-pick theme-pick-klassika"><input type="radio" name="theme" value="klassika" checked><span>Усадьба</span></label><label class="theme-pick theme-pick-sad"><input type="radio" name="theme" value="sad"><span>Белые ночи</span></label><label class="theme-pick theme-pick-noch"><input type="radio" name="theme" value="noch"><span>Афиша</span></label></div>
+    </fieldset>
+    <button class="btn" type="submit">Создать приглашение</button>
+  </form>
+</main>
+<footer class="foot"><span>© 2026 Позови</span><a href="/polusi/privacy">Политика конфиденциальности</a></footer>
+<script>document.addEventListener('submit',function(e){e.preventDefault();alert('Это витрина сайта. Создание приглашений и ответы гостей заработают на полной версии с сервером.');});</script></body>
+</html>

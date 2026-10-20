@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Кабинет: Анна и Михаил — Позови</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Lora:ital,wght@0,400;0,600;1,400&family=Playfair+Display:wght@400;600&family=Golos+Text:wght@400;500;600&family=Forum&family=Yeseva+One&family=Unbounded:wght@800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/polusi/static/app.css">
+</head>
+<body class="">
+
+<header class="top"><a class="logo" href="/polusi/">Позови</a><nav><a href="/polusi/#examples">Примеры</a><a href="/polusi/#prices">Цены</a><a class="btn btn-sm" href="/polusi/new">Создать</a></nav></header>
+<main>
+  
+  
+  <div class="notice">Это демо-кабинет. Так выглядят ответы гостей.</div>
+  <div class="cab-head">
+    <div><p class="kicker">Свадьба · 19 июня 2027, суббота</p><h1>Анна и Михаил</h1></div>
+    <div class="cab-actions">
+      <a class="btn btn-ghost" href="/polusi/i/demo-klassika" target="_blank" rel="noopener">Открыть сайт</a>
+      <a class="btn btn-ghost" href="/polusi/c/demo-kabinet/edit">Редактировать</a>
+    </div>
+  </div>
+
+  <div class="share">
+    <label>Ссылка для гостей<input id="share-link" readonly value="https://poluci.github.io/polusi/i/demo-klassika"></label>
+    <button class="btn" type="button" data-copy="#share-link">Скопировать</button>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><span class="num">4</span><span>ответа</span></div>
+    <div class="stat"><span class="num">3</span><span>придут</span></div>
+    <div class="stat"><span class="num">1</span><span>не смогут</span></div>
+    <div class="stat stat-accent"><span class="num">4</span><span>гостя всего</span></div>
+  </div>
+
+  <div class="table-head"><h2>Ответы гостей</h2><a class="btn btn-sm btn-ghost" href="/polusi/c/demo-kabinet/guests.csv">Скачать для Excel</a></div>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Имя</th><th>Ответ</th><th>Человек</th><th>Меню</th><th>Трансфер</th><th>Комментарий</th><th>Дата</th></tr></thead>
+    <tbody><tr>
+      <td>Елена Смирнова</td>
+      <td><span class="tag tag-yes">придёт</span></td>
+      <td>2</td>
+      <td>без глютена</td>
+      <td>нужен</td>
+      <td>Очень ждём!</td>
+      <td class="nowrap">19.10.2026</td>
+    </tr><tr>
+      <td>Игорь Петров</td>
+      <td><span class="tag tag-yes">придёт</span></td>
+      <td>1</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td class="nowrap">18.10.2026</td>
+    </tr><tr>
+      <td>Бабушка Валя</td>
+      <td><span class="tag tag-yes">придёт</span></td>
+      <td>1</td>
+      <td>без острого</td>
+      <td>нужен</td>
+      <td>Нужна помощь с дорогой</td>
+      <td class="nowrap">17.10.2026</td>
+    </tr><tr>
+      <td>Сергей и Мария Ковалёвы</td>
+      <td><span class="tag tag-no">не придёт</span></td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+      <td>К сожалению, будем в отъезде. Поздравляем!</td>
+      <td class="nowrap">16.10.2026</td>
+    </tr></tbody></table></div>
+</main>
+<footer class="foot"><span>© 2026 Позови</span><a href="/polusi/privacy">Политика конфиденциальности</a></footer>
+<script>
+document.querySelectorAll('[data-copy]').forEach(function (b) {
+  b.addEventListener('click', function () {
+    var i = document.querySelector(b.dataset.copy); i.select();
+    (navigator.clipboard ? navigator.clipboard.writeText(i.value) : Promise.reject()).catch(function () { document.execCommand('copy'); });
+    b.textContent = 'Скопировано'; setTimeout(function () { b.textContent = 'Скопировать'; }, 1500);
+  });
+});
+</script>
+<script>document.addEventListener('submit',function(e){e.preventDefault();alert('Это витрина сайта. Создание приглашений и ответы гостей заработают на полной версии с сервером.');});</script></body>
+</html>
