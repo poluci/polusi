@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Даша, 25: зову на день рождения</title>
+
+<meta name="description" content="Зову на день рождения. 17 апреля 2027, суббота, в 19:00. Бар «Сделано»">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Даша, 25">
+<meta property="og:description" content="Зову на день рождения. 17 апреля 2027, суббота, в 19:00. Бар «Сделано»">
+<meta property="og:url" content="https://poluci.github.io/polusi/i/demo-chat">
+<meta property="og:site_name" content="Позови">
+
+<meta name="theme-color" content="#dfe7ee">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/polusi/static/invite.css">
+</head>
+<body class="theme-chat">
+
+
+<header class="cover">
+  <div class="chat">
+    <div class="chat-bar"><span class="chat-ava">Д</span><div><b>Даша, 25</b><small>в сети</small></div></div>
+    <div class="chat-feed">
+      <p class="msg in"><span>Привет! Это</span> <span class="cover-names">Даша, 25</span></p>
+      <p class="msg in cover-lead">Зову на день рождения</p>
+      <p class="msg in cover-date">17 апреля 2027, суббота, в 19:00</p>
+      <p class="msg in msg-place"><b>Бар «Сделано»</b><small>Москва, Покровка, 17</small></p>
+      <p class="msg out">Ура! Где ответить?</p>
+      <p class="msg in"><a href="#rsvp">В анкете ниже, это минута</a></p>
+    </div>
+  </div>
+</header>
+
+<main class="sheet">
+<section class="block block-message"><p class="message">Отмечаю двадцать пять. Будет бар, друзья и немного караоке. Приходите в чём удобно, главное приходите.</p></section>
+
+
+
+
+<section class="block"><h2>Как пройдёт день</h2><ol class="program"><li><time>19:00</time><span>Встреча гостей</span></li><li><time>19:30</time><span>Ужин</span></li><li><time>21:00</time><span>Сюрприз от друзей</span></li><li><time>22:00</time><span>Танцы</span></li></ol></section>
+
+<section class="block"><h2>Где</h2>
+  <p class="venue">Бар «Сделано»</p>
+  <p class="address">Москва, Покровка, 17</p><a class="link-btn" href="https://yandex.ru/maps/?text=%D0%9C%D0%BE%D1%81%D0%BA%D0%B2%D0%B0%2C%20%D0%9F%D0%BE%D0%BA%D1%80%D0%BE%D0%B2%D0%BA%D0%B0%2C%2017" target="_blank" rel="noopener">Открыть в Яндекс Картах</a>
+</section>
+
+<section class="block"><h2>Что надеть</h2><p>Как вам удобно. Если хочется, поддержите цвета праздника.</p><div class="swatches"><span class="swatch" style="background:#3a8ee6"></span><span class="swatch" style="background:#dcf4c8"></span><span class="swatch" style="background:#e7a35a"></span></div></section>
+
+<section id="rsvp" class="block block-rsvp">
+  <h2>Вы придёте?</h2>
+  
+  
+  <form method="post" action="/polusi/i/demo-chat/rsvp" class="rsvp">
+    <label>Имя и фамилия<input name="name" required maxlength="100" autocomplete="name"></label>
+    <fieldset class="choice"><legend class="sr">Ваш ответ</legend>
+      <label><input type="radio" name="attending" value="yes" checked><span>Приду</span></label>
+      <label><input type="radio" name="attending" value="no"><span>Не смогу</span></label>
+    </fieldset>
+    <label class="if-yes">Сколько вас будет, вместе с вами<select name="count"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select></label>
+    <label class="if-yes">Пожелания по меню<input name="menu" maxlength="300" placeholder="Например, без мяса"></label>
+    <label class="check if-yes"><input type="checkbox" name="transfer"><span>Нужен трансфер</span></label>
+    <label>Комментарий<textarea name="comment" rows="2" maxlength="1000"></textarea></label>
+    <label class="check consent"><input type="checkbox" name="consent" required><span>Согласен на обработку моих данных организаторами для подготовки праздника (<a href="/polusi/privacy" target="_blank">политика</a>)</span></label>
+    <button type="submit">Отправить ответ</button>
+  </form>
+</section>
+
+<section class="block"><h2>Если есть вопросы</h2><p>Организатор Ольга, +7 900 000-00-00</p></section>
+</main>
+
+<footer class="made">Сделано в <a href="/polusi/?from=demo-chat">Позови</a></footer>
+
+<script src="/polusi/static/invite.js" defer></script>
+<script>document.addEventListener('submit',function(e){e.preventDefault();alert('Это витрина сайта. Создание приглашений и ответы гостей заработают на полной версии с сервером.');});</script></body>
+</html>

@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Юбилей бабушки Нины: приглашаем на праздник</title>
+
+<meta name="description" content="Приглашаем на праздник. 3 марта 2027, среда, в 15:00. Ресторан «Чехов»">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Юбилей бабушки Нины">
+<meta property="og:description" content="Приглашаем на праздник. 3 марта 2027, среда, в 15:00. Ресторан «Чехов»">
+<meta property="og:url" content="https://poluci.github.io/polusi/i/demo-kniga">
+<meta property="og:site_name" content="Позови">
+
+<meta name="theme-color" content="#e8721c">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/polusi/static/invite.css">
+</head>
+<body class="theme-kniga">
+
+
+<header class="cover">
+  <div class="book">
+    <p class="book-band book-series">Библиотека праздника</p>
+    <div class="book-title">
+      <h1 class="cover-names">Юбилей бабушки Нины</h1>
+      <p class="book-rule" aria-hidden="true"></p>
+      <p class="cover-lead">Приглашаем на праздник</p>
+    </div>
+    <p class="book-band book-foot"><span class="cover-date">3 марта 2027, среда, в 15:00</span></p>
+  </div>
+</header>
+
+<main class="sheet">
+<section class="block block-message"><p class="message">Бабушке Нине восемьдесят. Собираемся всей семьёй, со внуками и правнуками. Принесите старые фотографии и истории, бабушка очень их ждёт.</p></section>
+
+
+
+
+<section class="block"><h2>Содержание</h2><ol class="program"><li><time>15:00</time><span>Сбор гостей</span></li><li><time>15:30</time><span>Праздничный обед</span></li><li><time>17:00</time><span>Фото и воспоминания</span></li><li><time>18:00</time><span>Чай и торт</span></li></ol></section>
+
+<section class="block"><h2>Где</h2>
+  <p class="venue">Ресторан «Чехов»</p>
+  <p class="address">Москва, ул. Чехова, 6</p><a class="link-btn" href="https://yandex.ru/maps/?text=%D0%9C%D0%BE%D1%81%D0%BA%D0%B2%D0%B0%2C%20%D1%83%D0%BB.%20%D0%A7%D0%B5%D1%85%D0%BE%D0%B2%D0%B0%2C%206" target="_blank" rel="noopener">Открыть в Яндекс Картах</a>
+</section>
+
+<section class="block"><h2>Что надеть</h2><p>Как вам удобно. Если хочется, поддержите цвета праздника.</p><div class="swatches"><span class="swatch" style="background:#e8721c"></span><span class="swatch" style="background:#1f1f1d"></span><span class="swatch" style="background:#fbfaf7"></span></div></section>
+
+<section id="rsvp" class="block block-rsvp">
+  <h2>Вы придёте?</h2>
+  
+  
+  <form method="post" action="/polusi/i/demo-kniga/rsvp" class="rsvp">
+    <label>Имя и фамилия<input name="name" required maxlength="100" autocomplete="name"></label>
+    <fieldset class="choice"><legend class="sr">Ваш ответ</legend>
+      <label><input type="radio" name="attending" value="yes" checked><span>Приду</span></label>
+      <label><input type="radio" name="attending" value="no"><span>Не смогу</span></label>
+    </fieldset>
+    <label class="if-yes">Сколько вас будет, вместе с вами<select name="count"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select></label>
+    <label class="if-yes">Пожелания по меню<input name="menu" maxlength="300" placeholder="Например, без мяса"></label>
+    <label class="check if-yes"><input type="checkbox" name="transfer"><span>Нужен трансфер</span></label>
+    <label>Комментарий<textarea name="comment" rows="2" maxlength="1000"></textarea></label>
+    <label class="check consent"><input type="checkbox" name="consent" required><span>Согласен на обработку моих данных организаторами для подготовки праздника (<a href="/polusi/privacy" target="_blank">политика</a>)</span></label>
+    <button type="submit">Отправить ответ</button>
+  </form>
+</section>
+
+<section class="block"><h2>Если есть вопросы</h2><p>Организатор Ольга, +7 900 000-00-00</p></section>
+</main>
+
+<footer class="made">Сделано в <a href="/polusi/?from=demo-kniga">Позови</a></footer>
+
+<script src="/polusi/static/invite.js" defer></script>
+<script>document.addEventListener('submit',function(e){e.preventDefault();alert('Это витрина сайта. Создание приглашений и ответы гостей заработают на полной версии с сервером.');});</script></body>
+</html>

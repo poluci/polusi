@@ -1,11 +1,12 @@
-/* Сайт-приглашение. Семь миров на общей разметке:
+/* Сайт-приглашение. Двадцать шаблонов на общей разметке, каждый по мотивам настоящей вещи:
    Усадьба (klassika) — жёлтый фасад и белые колонны подмосковной усадьбы, гравюрная линия;
    Белые ночи (sad) — северное небо над кромкой соснового леса, ночь внутри;
    Афиша (noch) — бархат театрального занавеса с Большой Дмитровки, шрифт и есть картинка;
    Журнал (zhurnal) — обложка глянца: узкая антиква-маштаб на всю ширину, подписи столбиком;
    Открытка (otkrytka) — плотный картон на сером столе, слепое тиснение монограммы, оборот с текстом;
    Билет (bilet) — пригласительный билет на бланке, данные набраны как в кассе, корешок отрывается;
-   Календарь (kalendar) — узкая колонка мобильного приглашения, дата через черту и месяц с обведённым днём. */
+   Календарь (kalendar) — узкая колонка мобильного приглашения, дата через черту и месяц с обведённым днём;
+   дальше табло, пластинка, полароид, телеграмма, меню, программка, этикетка, выставка, книга, плакат, чат, чек, тетрадь. */
 
 .theme-klassika {
   --cover: #efe0a8; --ground: #f8f8f4; --ink: #1f3a2e; --soft: #4e5f55; --line: #d9d6c4;
@@ -319,3 +320,331 @@ p { margin: 0 0 .8em; }
 .js-ready .month.drawn .day-on path { stroke-dashoffset: 0; }
 .block-calendar .countdown { justify-content: center; margin-top: 26px; color: var(--soft); font-size: 15px; }
 .block-calendar .countdown b { font-size: 24px; font-weight: 400; color: var(--ink); }
+
+/* =====================================================================
+   Табло: вокзальное табло, буквы в ячейках перещёлкиваются
+   ===================================================================== */
+.theme-tablo {
+  --cover: #23262b; --ground: #f1f2f0; --ink: #1d2024; --soft: #5f656d; --line: #d9dcdf;
+  --field: #ffffff; --button: #1d2024; --button-ink: #ffffff; --mark: #f0b429;
+  --display: 'Oswald', 'Arial Narrow', sans-serif; --text: 'Roboto Condensed', 'Arial Narrow', sans-serif; --size: 18px;
+}
+.theme-tablo .cover { justify-content: center; padding: 40px 16px; color: #e9eaec; }
+.theme-tablo .board { margin: 0 0 36px; padding: 16px 14px; border-radius: 6px; background: #17191d; box-shadow: inset 0 0 0 1px #34383f, 0 20px 40px -20px rgba(0,0,0,.6); }
+.theme-tablo .board-row { display: grid; grid-template-columns: 58px 1fr; align-items: start; gap: 10px; padding: 8px 0; border-bottom: 1px solid #2b2f35; }
+.theme-tablo .board-row:last-child { border-bottom: 0; }
+.theme-tablo .board-row dt { padding-top: 9px; font-size: 13px; color: #8d939b; }
+.theme-tablo .board-row dd { display: flex; flex-wrap: wrap; gap: 6px 10px; margin: 0; }
+.theme-tablo .word { display: inline-flex; gap: 2px; }
+.theme-tablo .flap { position: relative; display: grid; place-items: center; width: 21px; height: 34px; border-radius: 3px; background: linear-gradient(#2e3238 0 49%, #15171a 49% 51%, #2a2e34 51%); color: #f4f4f2; font: 600 21px/1 var(--display); }
+.theme-tablo .num .flap { color: var(--mark); }
+.theme-tablo .flap.spin { color: #9aa0a8; }
+.theme-tablo .cover-lead { margin: 0 0 6px; font-size: 16px; color: #a9aeb5; }
+.theme-tablo .cover-names { font: 600 clamp(38px, 11vw, 64px)/1 var(--display); letter-spacing: .005em; }
+.theme-tablo .cover-date { margin: 12px 0 0; color: #c5c9ce; }
+.theme-tablo .block h2 { font-weight: 600; }
+.theme-tablo .program time { color: var(--ink); font-family: var(--display); font-weight: 600; }
+
+/* =====================================================================
+   Пластинка: конверт с фото, диск выезжает и крутится
+   ===================================================================== */
+.theme-plastinka {
+  --cover: #2d3a5a; --ground: #f3f2ef; --ink: #1b2236; --soft: #5b6275; --line: #dcdbd6;
+  --field: #ffffff; --button: #e4572e; --button-ink: #ffffff; --mark: #e4572e;
+  --display: 'Dela Gothic One', 'Arial Black', sans-serif; --text: 'Manrope', system-ui, sans-serif; --size: 17px;
+}
+.theme-plastinka .cover { align-items: center; justify-content: center; gap: 0; color: #eef0f6; text-align: center; overflow: hidden; }
+.theme-plastinka .record { position: relative; width: min(250px, 62vw); aspect-ratio: 1; transform: translateX(-22%); cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.theme-plastinka .record:focus-visible { outline: 2px solid #fff; outline-offset: 8px; }
+.theme-plastinka .sleeve { position: absolute; inset: 0; z-index: 2; overflow: hidden; background: #15171c; box-shadow: 0 2px 2px rgba(0,0,0,.2), 0 26px 40px -18px rgba(0,0,0,.6); }
+.theme-plastinka .sleeve .cover-photo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: grayscale(.2) contrast(1.05); }
+.theme-plastinka .sleeve .cover-names { position: absolute; left: 14px; right: 14px; top: 12px; font: 400 clamp(26px, 8vw, 34px)/1.02 var(--display); color: #fff; text-align: left; }
+.theme-plastinka .disc { position: absolute; inset: 3%; z-index: 1; border-radius: 50%; background: radial-gradient(circle, #e4572e 0 18%, #0f0f10 18.5% 20%, #1a1a1c 20.5%, #0f0f10 21% 98%, transparent 98.5%), repeating-radial-gradient(circle, #19191b 0 1px, #111113 1px 3px); transform: translateX(34%); transition: transform 1s cubic-bezier(.2,.7,.2,1); }
+.theme-plastinka .disc-label { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 9px; line-height: 1.2; color: #fff; }
+.theme-plastinka .disc-label b { max-width: 30%; font-family: var(--display); font-weight: 400; }
+.theme-plastinka .record.out .disc { transform: translateX(56%); }
+@media (prefers-reduced-motion: no-preference) { .theme-plastinka .record.out .disc-label { animation: rpm 1.8s linear infinite; } }
+@keyframes rpm { to { transform: rotate(360deg); } }
+.theme-plastinka .cover-lead { margin: 34px 0 6px; font-size: 16px; color: #c7cddd; }
+.theme-plastinka .cover-date { margin: 0; font-weight: 700; font-size: 18px; }
+.theme-plastinka .record-hint { margin: 18px 0 0; font-size: 14px; color: #9aa3bb; }
+.theme-plastinka .block h2 { font-weight: 400; font-size: clamp(28px, 8vw, 38px); }
+.theme-plastinka .program { counter-reset: track; }
+.theme-plastinka .program li { grid-template-columns: 2em 1fr auto; }
+.theme-plastinka .program li::before { counter-increment: track; content: counter(track); color: var(--soft); }
+.theme-plastinka .program time { order: 3; color: var(--soft); font-variant-numeric: tabular-nums; }
+.theme-plastinka .rsvp button, .theme-plastinka .choice span, .theme-plastinka .rsvp input:not([type=radio]):not([type=checkbox]), .theme-plastinka .rsvp select, .theme-plastinka .rsvp textarea { border-radius: 8px; }
+
+/* =====================================================================
+   Полароид: стопка снимков с подписями от руки
+   ===================================================================== */
+.theme-polaroid {
+  --cover: #d6d8d4; --ground: #f4f4f2; --ink: #2b2b2a; --soft: #6c6c68; --line: #dededa;
+  --field: #ffffff; --button: #2b2b2a; --button-ink: #ffffff; --mark: #2b2b2a;
+  --display: 'Caveat', cursive; --text: 'Lora', Georgia, serif; --size: 18px;
+}
+.theme-polaroid .cover { align-items: center; justify-content: center; text-align: center; color: var(--ink); }
+.theme-polaroid .stack { position: relative; width: min(280px, 70vw); aspect-ratio: 88 / 107; margin-bottom: 40px; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.theme-polaroid .stack:focus-visible { outline: 2px solid var(--ink); outline-offset: 10px; }
+.theme-polaroid .snap { position: absolute; inset: 0; margin: 0; padding: 7% 7% 0; background: #fdfdfb; box-shadow: 0 1px 2px rgba(0,0,0,.18), 0 14px 26px -12px rgba(0,0,0,.35); transition: transform .7s cubic-bezier(.2,.7,.2,1); }
+.theme-polaroid .snap img, .theme-polaroid .snap-empty { display: block; width: 100%; aspect-ratio: 1; object-fit: cover; background: #c9ccc6; }
+.theme-polaroid .snap .cover-photo { position: static; height: auto; }
+.theme-polaroid .snap figcaption { padding: 8px 4px 0; font: 700 26px/1.1 var(--display); color: #2e3a58; }
+.theme-polaroid .s0 { transform: rotate(-3deg); z-index: 3; }
+.theme-polaroid .s1 { transform: rotate(4deg) translate(10px, 6px); z-index: 2; }
+.theme-polaroid .s2 { transform: rotate(-8deg) translate(-12px, 10px); z-index: 1; }
+.theme-polaroid .snap.away { transform: translate(-120%, -10px) rotate(-18deg); }
+.theme-polaroid .cover-lead { margin: 0 0 4px; font-style: italic; color: var(--soft); }
+.theme-polaroid .cover-date { margin: 0; }
+.theme-polaroid .block h2 { font-weight: 700; font-size: clamp(40px, 11vw, 52px); }
+.theme-polaroid .gallery img { padding: 10px 10px 40px; background: #fff; box-shadow: 0 1px 2px rgba(0,0,0,.15), 0 12px 22px -12px rgba(0,0,0,.3); }
+.theme-polaroid .gallery img:first-child { transform: rotate(-2deg); }
+.theme-polaroid .gallery img:nth-child(2) { transform: rotate(3deg); }
+
+/* =====================================================================
+   Телеграмма: бланк с наклеенными полосками ленты
+   ===================================================================== */
+.theme-telegramma {
+  --cover: #9aa6b2; --ground: #f1f2ee; --ink: #1d2733; --soft: #4e5d70; --line: #c9d1da;
+  --field: #ffffff; --button: #2d4a7a; --button-ink: #ffffff; --mark: #2d4a7a;
+  --display: 'PT Mono', ui-monospace, monospace; --text: 'PT Sans Narrow', 'Arial Narrow', sans-serif; --size: 19px;
+}
+.theme-telegramma .cover { align-items: center; justify-content: center; padding: 40px 14px; }
+.theme-telegramma .tg-form { position: relative; width: min(400px, 100%); padding: 22px 18px 30px; background: #f4f3ee; color: var(--mark); box-shadow: 0 1px 2px rgba(29,39,51,.2), 0 24px 40px -22px rgba(29,39,51,.55); }
+.theme-telegramma .tg-title { margin: 0 0 14px; font: 700 30px/1 var(--text); letter-spacing: .14em; text-transform: uppercase; text-align: center; }
+.theme-telegramma .tg-meta { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 0 0 18px; padding-bottom: 10px; border-bottom: 1px solid currentColor; font-size: 14px; }
+.theme-telegramma .tg-meta div { display: flex; gap: 6px; }
+.theme-telegramma .tg-meta dd { margin: 0; font-family: var(--display); color: var(--ink); }
+.theme-telegramma .tg-strips { display: flex; flex-direction: column; align-items: flex-start; gap: 7px; }
+.theme-telegramma .tg-strip { margin: 0; padding: 3px 8px; background: #fffef8; color: #22252a; font: 400 16px/1.35 var(--display); text-transform: uppercase; letter-spacing: .02em; box-shadow: 0 1px 1px rgba(0,0,0,.14); }
+.theme-telegramma .tg-strip::after { content: ' тчк'; }
+.theme-telegramma .tg-strip:nth-child(2n) { transform: rotate(.5deg); }
+.theme-telegramma .tg-strip:nth-child(3n) { transform: rotate(-.4deg) translateX(3px); }
+.theme-telegramma h1.tg-strip { font-weight: 400; font-size: 22px; }
+.theme-telegramma .tg-stamp { position: absolute; right: 16px; bottom: 16px; display: grid; place-items: center; width: 92px; height: 92px; margin: 0; border: 2px solid rgba(118,62,140,.75); border-radius: 50%; color: rgba(118,62,140,.85); font: 700 14px var(--display); transform: rotate(-14deg); box-shadow: inset 0 0 0 5px #f4f3ee, inset 0 0 0 6px rgba(118,62,140,.6); }
+.theme-telegramma .block h2 { font: 400 26px var(--display); text-transform: uppercase; letter-spacing: .02em; }
+.theme-telegramma .program time { font-family: var(--display); color: var(--mark); }
+
+/* =====================================================================
+   Меню: карточка ресторанного меню, программа как подачи
+   ===================================================================== */
+.theme-menu {
+  --cover: #f6f5f1; --ground: #f6f5f1; --ink: #23241f; --soft: #6b6b62; --line: #dddcd3;
+  --field: #ffffff; --button: #5e2433; --button-ink: #ffffff; --mark: #5e2433;
+  --display: 'Spectral', Georgia, serif; --text: 'Spectral', Georgia, serif; --size: 19px;
+}
+.theme-menu .cover { align-items: center; justify-content: center; padding: 24px; }
+.theme-menu .menu-card { display: flex; flex-direction: column; align-items: center; justify-content: center; width: min(400px, 100%); min-height: calc(100svh - 48px); padding: 40px 26px; border: 1px solid var(--ink); outline: 1px solid var(--ink); outline-offset: -7px; text-align: center; color: var(--ink); }
+.theme-menu .cover-lead { margin: 0 0 22px; font-style: italic; font-weight: 300; font-size: 18px; color: var(--soft); }
+.theme-menu .cover-names { font-weight: 300; font-size: clamp(44px, 12vw, 62px); line-height: 1.05; letter-spacing: -.01em; }
+.theme-menu .menu-rule { width: 32px; height: 1px; margin: 26px 0; background: var(--mark); }
+.theme-menu .cover-date { margin: 0; font-size: 17px; }
+.theme-menu .menu-courses { margin: 0; padding: 0; list-style: none; font-size: 20px; line-height: 2; }
+.theme-menu .menu-venue { margin: 4px 0 0; font-style: italic; font-size: 17px; color: var(--soft); }
+.theme-menu .block h2 { font-weight: 300; font-style: italic; text-align: center; }
+.theme-menu .message, .theme-menu .venue, .theme-menu .address, .theme-menu .block > p { text-align: center; }
+.theme-menu .link-btn { display: table; margin: 4px auto 0; }
+.theme-menu .swatches { justify-content: center; }
+.theme-menu .program li { display: flex; flex-direction: column-reverse; align-items: center; gap: 2px; padding: 14px 0; border: 0; text-align: center; font-size: 21px; }
+.theme-menu .program time { font-size: 15px; font-style: italic; color: var(--mark); }
+
+/* =====================================================================
+   Программка: театральная программка
+   ===================================================================== */
+.theme-programmka {
+  --cover: #faf8f4; --ground: #faf8f4; --ink: #2a1d1a; --soft: #6e5f59; --line: #e5ddd6;
+  --field: #ffffff; --button: #9e2428; --button-ink: #ffffff; --mark: #9e2428;
+  --display: 'Playfair Display', Georgia, serif; --text: 'Playfair Display', Georgia, serif; --size: 18px;
+}
+.theme-programmka .cover { align-items: center; justify-content: center; text-align: center; color: var(--ink); }
+.theme-programmka .playbill { width: min(420px, 100%); }
+.theme-programmka .pb-house { margin: 0 0 40px; padding-bottom: 12px; border-bottom: 3px double var(--ink); font-size: 15px; }
+.theme-programmka .cover-lead { margin: 0 0 10px; font-style: italic; color: var(--soft); }
+.theme-programmka .cover-names { font-weight: 600; font-style: italic; font-size: clamp(46px, 13vw, 76px); line-height: 1; color: var(--mark); }
+.theme-programmka .pb-genre { margin: 14px 0 40px; font-size: 17px; }
+.theme-programmka .pb-cast-title { margin: 0 0 12px; font-style: italic; color: var(--soft); }
+.theme-programmka .pb-cast { margin: 0 auto 36px; max-width: 290px; }
+.theme-programmka .pb-cast div { display: flex; align-items: baseline; gap: 8px; padding: 4px 0; }
+.theme-programmka .pb-cast dt { font-style: italic; }
+.theme-programmka .pb-cast dt::after { content: ''; flex: 1; }
+.theme-programmka .pb-cast div::before { content: ''; order: 1; flex: 1; border-bottom: 1px dotted var(--soft); transform: translateY(-4px); }
+.theme-programmka .pb-cast dd { order: 2; margin: 0; font-weight: 600; }
+.theme-programmka .cover-date { margin: 0; padding-top: 12px; border-top: 3px double var(--ink); font-size: 16px; }
+.theme-programmka .block h2 { font-style: italic; text-align: center; color: var(--mark); }
+.theme-programmka .message, .theme-programmka .venue, .theme-programmka .address, .theme-programmka .block > p { text-align: center; }
+.theme-programmka .link-btn { display: table; margin: 4px auto 0; }
+.theme-programmka .swatches { justify-content: center; }
+.theme-programmka .program { counter-reset: act; }
+.theme-programmka .program { max-width: 420px; margin: 0 auto; }
+.theme-programmka .program li { grid-template-columns: 1fr; gap: 2px; text-align: center; font-size: 20px; }
+.theme-programmka .program li time { font-size: 15px; font-style: italic; }
+.theme-programmka .program li time::before { counter-increment: act; content: 'Действие ' counter(act, upper-roman) ', '; color: var(--mark); }
+
+/* =====================================================================
+   Этикетка: винная этикетка на тёмном стекле
+   ===================================================================== */
+.theme-vino {
+  --cover: #2b2e22; --ground: #f5f2ea; --ink: #2a2620; --soft: #6c655a; --line: #e0dacd;
+  --field: #ffffff; --button: #4a1c25; --button-ink: #f5f2ea; --mark: #8a2b3a;
+  --display: 'Prata', Georgia, serif; --text: 'Lora', Georgia, serif; --size: 18px;
+}
+.theme-vino .cover { align-items: center; justify-content: center; background: radial-gradient(60% 50% at 50% 45%, #3a3e2e, #23261c); }
+.theme-vino .label { width: min(330px, 86vw); padding: 34px 24px 30px; background: #efe9db; color: var(--ink); text-align: center; border: 1px solid #c9b98f; outline: 1px solid #c9b98f; outline-offset: -8px; box-shadow: 0 2px 2px rgba(0,0,0,.25), 0 30px 50px -24px rgba(0,0,0,.7); }
+.theme-vino .lb-year { margin: 0 0 18px; font-size: 14px; letter-spacing: .08em; color: var(--mark); }
+.theme-vino .cover-names { font-size: clamp(38px, 11vw, 50px); line-height: 1.08; }
+.theme-vino .cover-lead { margin: 12px 0 0; font-style: italic; font-size: 16px; color: var(--soft); }
+.theme-vino .lb-rule { width: 60%; height: 1px; margin: 22px auto; background: #b8a77c; }
+.theme-vino .lb-made { margin: 0 0 6px; font-size: 13px; line-height: 1.5; color: var(--soft); }
+.theme-vino .cover-date { margin: 0; font-size: 15px; }
+.theme-vino .block h2 { text-align: center; }
+.theme-vino .message, .theme-vino .venue, .theme-vino .address, .theme-vino .block > p { text-align: center; }
+.theme-vino .link-btn { display: table; margin: 4px auto 0; }
+.theme-vino .swatches { justify-content: center; }
+.theme-vino .swatch { width: 40px; height: 40px; margin: 0 4px; border-radius: 50%; }
+
+/* =====================================================================
+   Выставка: снимок на стене галереи и музейная этикетка
+   ===================================================================== */
+.theme-vystavka {
+  --cover: #f2f2f0; --ground: #f2f2f0; --ink: #1b1b1a; --soft: #6a6a66; --line: #dcdcd8;
+  --field: #ffffff; --button: #1b1b1a; --button-ink: #ffffff; --mark: #1b1b1a;
+  --display: 'Inter Tight', system-ui, sans-serif; --text: 'Inter Tight', system-ui, sans-serif; --size: 17px;
+}
+.theme-vystavka .cover { align-items: center; justify-content: center; padding: 40px 22px; background: radial-gradient(70% 45% at 50% 30%, #fbfbfa, #ecece9 70%); color: var(--ink); }
+.theme-vystavka .artwork { width: min(300px, 76vw); margin: 0 0 44px; padding: 14px; background: #fff; border: 8px solid #1d1d1c; box-shadow: 0 30px 40px -24px rgba(0,0,0,.45); }
+.theme-vystavka .artwork .cover-photo, .theme-vystavka .art-field { position: static; display: block; width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; }
+.theme-vystavka .wall-label { align-self: stretch; max-width: 300px; margin: 0 auto; padding-left: 14px; border-left: 1px solid #c4c4bf; font-size: 15px; line-height: 1.45; }
+.theme-vystavka .cover-names { font-weight: 600; font-size: 20px; line-height: 1.3; }
+.theme-vystavka .wl-title { margin: 0; font-style: italic; }
+.theme-vystavka .cover-lead { margin: 10px 0 0; color: var(--soft); }
+.theme-vystavka .cover-date, .theme-vystavka .wl-venue { margin: 0; color: var(--soft); }
+.theme-vystavka .block h2 { font-weight: 600; font-size: 26px; }
+.theme-vystavka .gallery img { padding: 10px; background: #fff; border: 5px solid #1d1d1c; }
+
+/* =====================================================================
+   Книга: обложка классической серии в три полосы
+   ===================================================================== */
+.theme-kniga {
+  --cover: #e8721c; --ground: #fbfaf7; --ink: #1f1f1d; --soft: #66645e; --line: #e4e1da;
+  --field: #ffffff; --button: #e8721c; --button-ink: #1f1f1d; --mark: #c85a0c;
+  --display: 'Jost', system-ui, sans-serif; --text: 'Jost', system-ui, sans-serif; --size: 18px;
+}
+.theme-kniga .cover { padding: 0; }
+.theme-kniga .book { display: grid; grid-template-rows: 1fr auto 1fr; min-height: 100svh; }
+.theme-kniga .book-band { display: flex; align-items: center; justify-content: center; gap: 14px; margin: 0; padding: 20px; background: var(--cover); color: #1f1f1d; font-size: 15px; font-weight: 500; text-align: center; }
+.theme-kniga .book-series { align-items: flex-end; }
+.theme-kniga .book-foot { flex-direction: column; justify-content: flex-start; }
+.theme-kniga .book-title { padding: 44px 24px; background: #fbfaf7; color: var(--ink); text-align: center; }
+.theme-kniga .cover-names { font-weight: 500; font-size: clamp(38px, 11vw, 60px); line-height: 1.05; letter-spacing: -.01em; }
+.theme-kniga .book-rule { width: 40%; height: 1px; margin: 22px auto; background: var(--ink); }
+.theme-kniga .cover-lead { margin: 0; font-style: italic; font-size: 18px; }
+.theme-kniga .cover-date { font-size: 16px; }
+.theme-kniga .block h2 { font-weight: 500; }
+.theme-kniga .program li { grid-template-columns: 1fr auto; }
+.theme-kniga .program time { order: 2; color: var(--soft); }
+
+/* =====================================================================
+   Плакат: швейцарская типографика, огромная дата
+   ===================================================================== */
+.theme-plakat {
+  --cover: #ededea; --ground: #ededea; --ink: #141414; --soft: #5c5c58; --line: #cfcfca;
+  --field: #ffffff; --button: #e2231a; --button-ink: #ffffff; --mark: #e2231a;
+  --display: 'Geologica', system-ui, sans-serif; --text: 'Geologica', system-ui, sans-serif; --size: 17px;
+}
+.theme-plakat .cover { justify-content: space-between; padding: 22px 18px 26px; color: var(--ink); }
+.theme-plakat .pl-top .cover-names { font-weight: 800; font-size: 30px; line-height: 1.05; letter-spacing: -.03em; max-width: 9em; }
+.theme-plakat .pl-top .cover-lead { margin: 6px 0 0; font-size: 15px; }
+.theme-plakat .pl-date { display: flex; flex-direction: column; margin: 0; font: 800 clamp(180px, 56vw, 420px)/.78 var(--display); letter-spacing: -.06em; font-variant-numeric: tabular-nums; }
+.theme-plakat .pl-date span:first-child { color: var(--mark); }
+.theme-plakat .pl-bottom { align-self: flex-end; max-width: 14em; text-align: right; font-size: 15px; }
+.theme-plakat .cover-date, .theme-plakat .pl-venue { margin: 0; }
+.theme-plakat .pl-venue { font-weight: 600; }
+.theme-plakat .block h2 { font-weight: 800; letter-spacing: -.03em; }
+.theme-plakat .program time { color: var(--mark); font-weight: 600; }
+.theme-plakat .rsvp button { font-weight: 600; }
+
+/* =====================================================================
+   Чат: переписка в мессенджере
+   ===================================================================== */
+.theme-chat {
+  --cover: #dfe7ee; --ground: #f3f6f9; --ink: #1c232b; --soft: #6b7682; --line: #dbe2e9;
+  --field: #ffffff; --button: #3a8ee6; --button-ink: #ffffff; --mark: #3a8ee6;
+  --display: 'Roboto', system-ui, sans-serif; --text: 'Roboto', system-ui, sans-serif; --size: 17px;
+}
+.theme-chat .cover { padding: 0; justify-content: flex-start; }
+.theme-chat .chat { display: flex; flex-direction: column; width: 100%; max-width: 520px; min-height: 100svh; margin: 0 auto; }
+.theme-chat .chat-bar { display: flex; align-items: center; gap: 12px; padding: 12px 16px; background: #fff; border-bottom: 1px solid var(--line); color: var(--ink); }
+.theme-chat .chat-ava { display: grid; place-items: center; width: 42px; height: 42px; border-radius: 50%; background: #e7a35a; color: #fff; font-weight: 500; font-size: 16px; }
+.theme-chat .chat-bar b { display: block; font-weight: 500; font-size: 17px; line-height: 1.2; }
+.theme-chat .chat-bar small { font-size: 14px; color: var(--mark); }
+.theme-chat .chat-feed { display: flex; flex-direction: column; gap: 6px; flex: 1; justify-content: flex-end; padding: 20px 12px 28px; }
+.theme-chat .msg { max-width: 82%; margin: 0; padding: 8px 12px; border-radius: 16px; font-size: 17px; line-height: 1.35; color: var(--ink); box-shadow: 0 1px 1px rgba(28,35,43,.12); }
+.theme-chat .msg.in { align-self: flex-start; background: #fff; border-bottom-left-radius: 5px; }
+.theme-chat .msg.out { align-self: flex-end; background: #dcf4c8; border-bottom-right-radius: 5px; }
+.theme-chat .msg .cover-names { font-weight: 500; }
+.theme-chat .msg-place b { display: block; font-weight: 500; }
+.theme-chat .msg-place small { color: var(--soft); font-size: 15px; }
+.theme-chat .msg a { color: var(--mark); }
+.theme-chat .typing { align-self: flex-start; display: flex; gap: 4px; padding: 12px 14px; background: #fff; border-radius: 16px; }
+.theme-chat .typing i { width: 7px; height: 7px; border-radius: 50%; background: #a6b0bb; animation: dots 1s infinite; }
+.theme-chat .typing i:nth-child(2) { animation-delay: .15s; } .theme-chat .typing i:nth-child(3) { animation-delay: .3s; }
+@keyframes dots { 50% { transform: translateY(-3px); opacity: .5; } }
+.theme-chat .msg.wait { display: none; }
+.theme-chat .block h2 { font-weight: 500; font-size: 26px; }
+.theme-chat .rsvp button, .theme-chat .choice span, .theme-chat .rsvp input:not([type=radio]):not([type=checkbox]), .theme-chat .rsvp select, .theme-chat .rsvp textarea { border-radius: 12px; }
+
+/* =====================================================================
+   Чек: кассовый чек выезжает из аппарата
+   ===================================================================== */
+.theme-chek {
+  --cover: #3b3f45; --ground: #f6f6f3; --ink: #222; --soft: #666; --line: #ddd;
+  --field: #ffffff; --button: #222; --button-ink: #fff; --mark: #222;
+  --display: 'Cousine', ui-monospace, monospace; --text: 'Cousine', ui-monospace, monospace; --size: 16px;
+}
+.theme-chek .cover { align-items: center; justify-content: flex-start; padding: 28px 16px 40px; overflow: hidden; }
+.theme-chek .slot { position: relative; z-index: 3; width: min(330px, 92vw); height: 16px; border-radius: 8px; background: #1d1f23; box-shadow: inset 0 3px 4px rgba(0,0,0,.6); }
+.theme-chek .receipt { position: relative; z-index: 2; width: min(300px, 84vw); margin-top: -8px; padding: 26px 18px 34px; background: #fbfbf8; color: #222; font: 400 14px/1.5 var(--display); text-align: center; -webkit-mask: linear-gradient(#000 0 0) top / 100% calc(100% - 8px) no-repeat, conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) bottom / 12px 8px repeat-x; mask: linear-gradient(#000 0 0) top / 100% calc(100% - 8px) no-repeat, conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) bottom / 12px 8px repeat-x; }
+@media (prefers-reduced-motion: no-preference) { .theme-chek .receipt { animation: print 2.6s steps(26, end) .3s both; } }
+@keyframes print { from { transform: translateY(-100%); } }
+.theme-chek .receipt p { margin: 0; }
+.theme-chek .rc-shop { font-weight: 700; font-size: 16px; }
+.theme-chek .rc-addr { color: #555; font-size: 12px; }
+.theme-chek .rc-kind { margin: 14px 0 4px !important; text-transform: uppercase; letter-spacing: .1em; }
+.theme-chek .rc-row, .theme-chek .rc-total, .theme-chek .rc-items li { display: flex; justify-content: space-between; gap: 10px; text-align: left; }
+.theme-chek .rc-row { padding-bottom: 10px; border-bottom: 1px dashed #999; }
+.theme-chek .cover-lead { margin: 14px 0 2px !important; }
+.theme-chek .cover-names { font: 700 22px/1.2 var(--display); text-transform: uppercase; }
+.theme-chek .rc-items { margin: 14px 0 0; padding: 10px 0; border-block: 1px dashed #999; list-style: none; }
+.theme-chek .rc-total { margin: 8px 0 !important; font-weight: 700; font-size: 18px; }
+.theme-chek .cover-date { font-size: 12px; color: #555; }
+.theme-chek .rc-bar { height: 46px; margin: 18px 10px 8px !important; background: linear-gradient(90deg, #222 0 2px, #fff 2px 4px, #222 4px 5px, #fff 5px 8px, #222 8px 11px, #fff 11px 12px, #222 12px 13px, #fff 13px 16px) 0 0 / 16px 100%; }
+.theme-chek .rc-thanks { text-transform: uppercase; letter-spacing: .12em; }
+.theme-chek .block h2 { font-weight: 700; font-size: 22px; text-transform: uppercase; letter-spacing: .04em; }
+.theme-chek .program li { grid-template-columns: 1fr auto; border-bottom: 1px dashed #bbb; }
+.theme-chek .program time { order: 2; }
+
+/* =====================================================================
+   Тетрадь: страница в клетку, написано от руки
+   ===================================================================== */
+.theme-tetrad {
+  --cover: #f8fafc; --ground: #f8fafc; --ink: #233a8a; --soft: #4a5a8f; --line: #cfdcec;
+  --field: #ffffff; --button: #233a8a; --button-ink: #ffffff; --mark: #d1342f;
+  --display: 'Neucha', cursive; --text: 'Neucha', cursive; --size: 21px;
+}
+body.theme-tetrad { background-color: var(--ground); background-image: linear-gradient(90deg, transparent 32px, #e58a8a 32px 34px, transparent 34px), linear-gradient(#dde7f2 1px, transparent 1px), linear-gradient(90deg, #dde7f2 1px, transparent 1px); background-size: 100% 100%, 22px 22px, 22px 22px; }
+.theme-tetrad .cover { align-items: stretch; justify-content: center; padding: 40px 18px 40px 46px; background: transparent; color: var(--ink); }
+.theme-tetrad .page { position: relative; }
+.theme-tetrad .tt-date { margin: 0 0 4px; text-align: right; }
+.theme-tetrad .tt-kind { margin: 0 0 22px; text-align: center; font-size: 26px; }
+.theme-tetrad .cover-lead { margin: 0 0 4px; }
+.theme-tetrad .cover-names { font-size: clamp(46px, 13vw, 70px); line-height: 1.05; }
+.theme-tetrad .cover-date { margin: 16px 0 0; }
+.theme-tetrad .tt-venue { margin: 0; }
+.theme-tetrad .tt-mark { position: absolute; right: 0; bottom: -64px; margin: 0; color: var(--mark); font-size: 30px; transform: rotate(-8deg); }
+.theme-tetrad .tt-mark::after { content: ''; position: absolute; left: -10px; right: -12px; top: 50%; height: 56px; margin-top: -28px; border: 2px solid var(--mark); border-radius: 50%; transform: rotate(4deg); }
+.theme-tetrad .sheet { margin: 0; padding-left: 46px; }
+.theme-tetrad .block h2 { font-size: 32px; text-decoration: underline; text-decoration-thickness: 1.5px; text-underline-offset: 6px; }
+.theme-tetrad .program li { border-bottom: 0; }
+.theme-tetrad .rsvp input:not([type=radio]):not([type=checkbox]), .theme-tetrad .rsvp select, .theme-tetrad .rsvp textarea { font-family: var(--text); font-size: 20px; }
+.theme-chat .msg.pop { animation: msg-in .28s cubic-bezier(.2,.7,.2,1) both; }
+@keyframes msg-in { from { opacity: 0; transform: translateY(8px); } }

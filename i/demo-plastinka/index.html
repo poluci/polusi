@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Серёга, 40: зову на день рождения</title>
+
+<meta name="description" content="Зову на день рождения. 20 февраля 2027, суббота, в 20:00. Бар «Пластинка»">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Серёга, 40">
+<meta property="og:description" content="Зову на день рождения. 20 февраля 2027, суббота, в 20:00. Бар «Пластинка»">
+<meta property="og:url" content="https://poluci.github.io/polusi/i/demo-plastinka">
+<meta property="og:site_name" content="Позови">
+<meta property="og:image" content="https://poluci.github.io/polusi/static/photos/afisha-bar.jpg">
+<meta name="theme-color" content="#2d3a5a">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Manrope:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/polusi/static/invite.css">
+</head>
+<body class="theme-plastinka">
+
+
+<header class="cover">
+  <div class="record" role="button" tabindex="0" aria-label="Достать пластинку" aria-pressed="false">
+    <div class="disc" aria-hidden="true"><span class="disc-label"><b>Серёга, 40</b><small>Сторона А</small></span></div>
+    <div class="sleeve">
+      <img class="cover-photo" src="/polusi/static/photos/afisha-bar.jpg" alt="">
+      <h1 class="cover-names">Серёга, 40</h1>
+    </div>
+  </div>
+  <p class="cover-lead">Зову на день рождения</p>
+  <p class="cover-date">20 февраля 2027, суббота, в 20:00</p>
+  <p class="record-hint">Нажмите на конверт, чтобы достать пластинку</p>
+</header>
+
+<main class="sheet">
+<section class="block block-message"><p class="message">Сорок лет, а пластинки всё те же. Будет бар, хорошая музыка и все, с кем я её слушал. Заявки на песни принимаю в анкете.</p></section>
+
+
+
+
+<section class="block"><h2>Сторона А</h2><ol class="program"><li><time>20:00</time><span>Сбор у бара</span></li><li><time>20:30</time><span>Первый сет</span></li><li><time>22:00</time><span>Торт и тосты</span></li><li><time>23:00</time><span>Танцы до закрытия</span></li></ol></section>
+
+<section class="block"><h2>Где</h2>
+  <p class="venue">Бар «Пластинка»</p>
+  <p class="address">Москва, Мясницкая ул., 13</p><a class="link-btn" href="https://yandex.ru/maps/?text=%D0%9C%D0%BE%D1%81%D0%BA%D0%B2%D0%B0%2C%20%D0%9C%D1%8F%D1%81%D0%BD%D0%B8%D1%86%D0%BA%D0%B0%D1%8F%20%D1%83%D0%BB.%2C%2013" target="_blank" rel="noopener">Открыть в Яндекс Картах</a>
+</section>
+
+<section class="block"><h2>Что надеть</h2><p>Как вам удобно. Если хочется, поддержите цвета праздника.</p><div class="swatches"><span class="swatch" style="background:#2d3a5a"></span><span class="swatch" style="background:#e4572e"></span><span class="swatch" style="background:#f3f2ef"></span></div></section>
+
+<section id="rsvp" class="block block-rsvp">
+  <h2>Вы придёте?</h2>
+  
+  
+  <form method="post" action="/polusi/i/demo-plastinka/rsvp" class="rsvp">
+    <label>Имя и фамилия<input name="name" required maxlength="100" autocomplete="name"></label>
+    <fieldset class="choice"><legend class="sr">Ваш ответ</legend>
+      <label><input type="radio" name="attending" value="yes" checked><span>Приду</span></label>
+      <label><input type="radio" name="attending" value="no"><span>Не смогу</span></label>
+    </fieldset>
+    <label class="if-yes">Сколько вас будет, вместе с вами<select name="count"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select></label>
+    <label class="if-yes">Пожелания по меню<input name="menu" maxlength="300" placeholder="Например, без мяса"></label>
+    <label class="check if-yes"><input type="checkbox" name="transfer"><span>Нужен трансфер</span></label>
+    <label>Комментарий<textarea name="comment" rows="2" maxlength="1000"></textarea></label>
+    <label class="check consent"><input type="checkbox" name="consent" required><span>Согласен на обработку моих данных организаторами для подготовки праздника (<a href="/polusi/privacy" target="_blank">политика</a>)</span></label>
+    <button type="submit">Отправить ответ</button>
+  </form>
+</section>
+
+<section class="block"><h2>Если есть вопросы</h2><p>Организатор Ольга, +7 900 000-00-00</p></section>
+</main>
+
+<footer class="made">Сделано в <a href="/polusi/?from=demo-plastinka">Позови</a></footer>
+
+<script src="/polusi/static/invite.js" defer></script>
+<script>document.addEventListener('submit',function(e){e.preventDefault();alert('Это витрина сайта. Создание приглашений и ответы гостей заработают на полной версии с сервером.');});</script></body>
+</html>
